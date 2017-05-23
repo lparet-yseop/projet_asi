@@ -3,9 +3,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="refresh" content="5;URL=activities.jsf" />
 <title>Projet ASI</title>
 </head>
 <body>
-<h1>Project</h1>
+
+<img alt="photoSplashScreen" src="splash.png">
 </body>
 </html>
