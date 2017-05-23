@@ -20,7 +20,7 @@
 				<div class="card-block">
 					<h4 class="card-title">Sign in or Sign up</h4>
 					<p class="card-text">Join our community</p>
-					<a href="#" class="btn btn-primary">Connexion</a>
+					<a href="login.jsf" class="btn btn-primary">Connexion</a>
 				</div>
 			</div>
 
