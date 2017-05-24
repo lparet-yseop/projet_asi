@@ -46,23 +46,25 @@ public abstract class AbstractValidator implements Validator {
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
-		matcher = pattern.matcher(value.toString());
+		if (value.toString() != null) {
 
-		if (value.toString().length() == 0) {
+			matcher = pattern.matcher(value.toString());
+
+			if (!matcher.matches()) {
+
+				FacesMessage msg = new FacesMessage(this.descriptor + "validation failed.",
+						this.descriptor + " Validation failed please follow the contraint " + this.pattern.toString());
+				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+				throw new ValidatorException(msg);
+
+			}
+
+		} else {
 			FacesMessage msg = new FacesMessage(this.descriptor + " ne peut pas être vide",
 					"Vous devez les renseigner ");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(msg);
 		}
-		if (!matcher.matches()) {
-
-			FacesMessage msg = new FacesMessage(this.descriptor + "validation failed.",
-					this.descriptor + " Validation failed please follow the contraint " + this.pattern.toString());
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			throw new ValidatorException(msg);
-
-		}
-
 	}
 
 }
