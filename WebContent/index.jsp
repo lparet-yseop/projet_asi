@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta http-equiv="refresh" content="5;URL=activities.jsf" />
+<meta http-equiv="refresh" content="5;URL=jsf/activities.jsf" />
 <title>Projet ASI</title>
 </head>
 <body>
