@@ -1,5 +1,6 @@
 package controler;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
@@ -54,16 +55,17 @@ public class UserControler {
 	 * To test
 	 * 
 	 */
-	public static void main(String[] args) {
-		UserControler uc = new UserControler();
+//	public static void main(String[] args) {
+//		System.out.println("tototo");
+//		UserControler uc = new UserControler();
 //		UserBean user = new UserBean("louis", "louis", "louis", "paret", new java.sql.Date(Calendar.getInstance().getTime().getTime()), "louis.paret@gmail.com");
 //		boolean addUser = uc.addUser(user);
 //		System.out.println("User add: " + addUser);
-
+//
 //		List<UserBean> allUsers = uc.getAllUsers();
 //		for(UserBean u : allUsers) {
 //			System.out.println(u.getFirstname());
 //		}
-		
-	}
+//		
+//	}
 }

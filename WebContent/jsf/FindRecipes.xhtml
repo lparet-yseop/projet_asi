@@ -6,7 +6,7 @@
 
 
 		<h:form>
-			<div class="row" style="margin-top:50px" >
+			<div class="row" style="margin-top: 50px">
 				<div class="col">
 					<p:outputLabel for="eatters" value="Number of eatters" />
 					<h:panelGrid columns="1" id="eatters" style="margin-bottom: 10px">
@@ -23,19 +23,19 @@
 				<div class="col">
 					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 						<p:outputLabel for="console" value="Cook type" />
-						<p:selectOneMenu id="console" value="#{selectOneMenuView.console}" style="width:155px">
+						<p:selectOneMenu id="console" value="#{receipeController.cookType}" style="width:155px">
 							<f:selectItem itemLabel="Select One" itemValue="" />
-							<f:selectItem itemLabel="Salade" itemValue="Salade" />
-							<f:selectItem itemLabel="Sandwich" itemValue="Sandwich" />
+							<f:selectItems value="#{cookTypeController.cookTypeBeansList}" var="cookType" itemLabel="#{cookType.getText()}" itemValue="#{cookType.getId()}" />
 						</p:selectOneMenu>
 					</h:panelGrid>
+
 
 				</div>
 				<div class="col"></div>
 			</div>
 
 
-		<p:commandButton value="Search" id="withIcon" actionListener="#{buttonView.buttonAction}"  icon="fa-arrow-left" />
+			<p:commandButton value="Search" id="withIcon" action="#{receipeController.getReceipesByCriteria()}" icon="fa-arrow-left" />
 
 
 		</h:form>
