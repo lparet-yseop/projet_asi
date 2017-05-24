@@ -63,6 +63,13 @@
 			<artifactId>bootstrap</artifactId>
 			<version>4.0.0-alpha.6-1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>4.7.0</version>
+		</dependency>
+
 		<!-- java validation API and RI -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -82,9 +89,9 @@
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.6</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
 		</dependency>
 	</dependencies>
 </project>
