@@ -1,7 +1,7 @@
 package beans;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

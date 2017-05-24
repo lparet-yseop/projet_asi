@@ -31,7 +31,7 @@
                 <div class="col-sm-12">
                     <div class="text-right">
                         <h:commandButton type="submit" class="btn btn-warning" value="Cancel" />
-                        <h:commandButton type="submit" class="btn btn-success ml-2" value="Connexion" />
+                        <h:commandButton type="submit" class="btn btn-success ml-2" value="Connexion" action="#{userControler.getUserByLogin(userBean.login, userBean.password)}" />
                         <a href="register.jsf" class="btn btn-primary">Register</a>
                     </div>
                 </div>

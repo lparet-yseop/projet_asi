@@ -23,7 +23,4 @@
 	    <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
 	    <param-value>false</param-value>
 	</context-param>	
-	<listener>
-	    <listener-class>config.InitialisationDaoFactory</listener-class>
-	</listener>
 </web-app>
