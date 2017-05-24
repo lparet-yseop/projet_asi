@@ -28,7 +28,7 @@ public class UserController {
 
         // TODO plug to DAO
 
-        return "login.jsf";
+        return "activities.jsf";
     }
 
 }

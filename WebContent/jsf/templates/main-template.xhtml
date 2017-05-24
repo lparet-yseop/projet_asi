@@ -5,6 +5,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="../webjars/tether/1.4.0/dist/css/tether.min.css" />
     <link rel="stylesheet" href="../webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.css" />
+    <link rel="stylesheet" href="../webjars/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="../css/global-styles.css" />
     <!-- Scripts -->
     <script src="../webjars/tether/1.4.0/dist/js/tether.min.js"></script>
@@ -12,29 +13,9 @@
     <script src="../webjars/bootstrap/4.0.0-alpha.6-1/js/bootstrap.min.js"></script>
 </h:head>
 <h:body>
-    <header class="header bg-info">
-        <nav class="navbar navbar-inverse container">
-            <a class="navbar-brand" href="#{request.contextPath}/jsf/activities.jsf">
-                <ui:insert name="header-title"></ui:insert>
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">
-                            Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+<!--     <header class="header bg-info">         -->
+        <ui:include src="header.xhtml" />
+<!--     </header> -->
     <div class="container mt-4">
         <ui:insert name="main-content"></ui:insert>
     </div>
