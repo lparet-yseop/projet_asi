@@ -8,7 +8,7 @@
 			<div class="form-group row #{login.valid ? '' : 'has-danger'}">
 				<label for="login" class="col-2 col-form-label">Login</label>
 				<div class="col-10">
-					<h:inputText binding="#{login}" class="form-control #{login.valid ? '' : 'form-control-danger'}" type="text" id="login" name="login" placeholder="Ex: WhiteApple" value="#{user.login}">
+					<h:inputText binding="#{login}" class="form-control #{login.valid ? '' : 'form-control-danger'}" type="text" id="login" name="login" placeholder="Ex: WhiteApple" value="#{userBean.login}" required="true">
 						<f:validator validatorId="validators.password" />
 					</h:inputText>
 					<div class="form-control-feedback">
@@ -20,7 +20,7 @@
 			<div class="form-group row #{password.valid ? '' : 'has-danger'}">
 				<label for="password" class="col-2 col-form-label">Password</label>
 				<div class="col-10">
-					<h:inputText binding="#{password}" class="form-control #{password.valid ? '' : 'form-control-danger'}" type="text" id="password" name="password" placeholder="Ex: Pass123*" value="#{user.password}">
+					<h:inputText binding="#{password}" class="form-control #{password.valid ? '' : 'form-control-danger'}" type="text" id="password" name="password" placeholder="Ex: Pass123*" value="#{userBean.password}" required="true">
 						<f:validator validatorId="validators.password" />
 					</h:inputText>
 					<div class="form-control-feedback">
