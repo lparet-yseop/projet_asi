@@ -19,7 +19,7 @@ public class UserDaoImpl implements UserDao {
     /* Implémentation de la méthode trouver() définie dans l'interface UtilisateurDao */
     @Override
     public UserBean trouver(String email) throws DAOException {
-        return null;
+    	return trouver(SQL_SELECT_PAR_EMAIL, email);
     }
 
     /* Implémentation de la méthode creer() définie dans l'interface UtilisateurDao */

@@ -24,6 +24,6 @@
 	    <param-value>false</param-value>
 	</context-param>	
 	<listener>
-	    <listener-class>com.sdzee.config.InitialisationDaoFactory</listener-class>
+	    <listener-class>config.InitialisationDaoFactory</listener-class>
 	</listener>
 </web-app>

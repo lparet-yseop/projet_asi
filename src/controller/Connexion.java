@@ -11,12 +11,11 @@ import beans.UserBean;
 import dao.DAOFactory;
 import dao.UserDao;
 
-public class Inscription extends HttpServlet {
+public class Connexion extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
     public static final String ATT_USER         = "user";
-    public static final String ATT_FORM         = "form";
-    public static final String VUE              = "/WEB-INF/jsf/register.jsp";
+    public static final String VUE              = "/WEB-INF/jsf/login.jsp";
 
     private UserDao userDao;
 
@@ -32,16 +31,11 @@ public class Inscription extends HttpServlet {
 
     public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-    	/* Préparation de l'objet formulaire */
-        InscriptionForm form = new InscriptionForm(userDao );
-
-        /* Traitement de la requête et récupération du bean en résultant */
-        UserBean user = form.inscrireUtilisateur( request );
-
-        /* Stockage du formulaire et du bean dans l'objet request */
-        request.setAttribute( ATT_FORM, form );
-        request.setAttribute( ATT_USER, user );
-        
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+    	UserBean user = userDao.trouver("louis.paret@gmail.com");
+    	if(user != null) {
+    		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+    	} else {
+    		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+    	}
     }
 }
