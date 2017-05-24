@@ -1,26 +1,48 @@
-package bean;
+package beans;
 
 import java.io.Serializable;
-import java.util.Random;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean
 @SessionScoped
-public class User implements Serializable {
+public class UserBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
+	private int id;
+	private String login;
+	private String password;
 	private String name;
-	private String firstName;
-	private String lastName;
-	private String pwd;
+	private String lastname;
 	private int age;
-	private int pictureNumber;
 	private String email;
+	
+	public UserBean() {
+	}
 
-	public User() {
-		java.util.Random rand = new java.util.Random();
-		pictureNumber = rand.nextInt(12);
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getName() {
@@ -31,16 +53,12 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-
-	public String goToWelcome() {
-		return "welcomeUser/welcome";
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public int getAge() {
@@ -59,28 +77,6 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
 	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
-	
-	public void setPictureNumber(int pictureNumber) {
-		this.pictureNumber = pictureNumber;
-	}
-	
-	public int getPictureNumber() {
-		return pictureNumber;
-	}
 	
 }
