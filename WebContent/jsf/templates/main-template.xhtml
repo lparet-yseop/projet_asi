@@ -12,15 +12,37 @@
     <script src="../webjars/bootstrap/4.0.0-alpha.6-1/js/bootstrap.min.js"></script>
 </h:head>
 <h:body>
-    <header>
-        <h1>Header</h1>
-        <ui:insert name="header-title"></ui:insert>
+    <header class="header bg-info">
+        <nav class="navbar navbar-inverse container">
+            <a class="navbar-brand" href="#">
+                <ui:insert name="header-title"></ui:insert>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
-    <div class="content">
+    <div class="container mt-4">
         <ui:insert name="main-content"></ui:insert>
     </div>
-    <div class="footer">
-        <h6>Copyright 2017</h6>
-    </div>
+    <footer class="footer fixed-bottom bg-faded pt-3">
+        <div class="container">
+            <p class="float-left">© Copyright 2017</p>
+            <p class="float-right">Projet ASI</p>
+        </div>
+    </footer>
 </h:body>
 </html>
