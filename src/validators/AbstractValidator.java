@@ -19,6 +19,7 @@ public abstract class AbstractValidator implements Validator {
     private static final String ABSTRACT_PATTERN = "^[_A-Za-z0-9-@]+";
     private static final String VALIDATION_ERROR_MESSAGE = "The field validation failed.";
     private static final String EMPTY_MESSAGE = "This field cannot be empty.";
+    private static final String NULL_VALUE = "This field cannot be empty.";    
     private static final String BAD_FORMAT_MESSAGE = "This field isn't in the correct format \"%s\".";
 
     private String formatMessage;
@@ -63,6 +64,12 @@ public abstract class AbstractValidator implements Validator {
 
     @Override
     public void validate( FacesContext context, UIComponent component, Object value ) throws ValidatorException {
+        if (value == null) {
+            FacesMessage msg = new FacesMessage(VALIDATION_ERROR_MESSAGE, NULL_VALUE);
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(msg);
+        }
+
         matcher = pattern.matcher(value.toString());
 
         if (value.toString().length() == 0) {
