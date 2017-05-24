@@ -1,7 +1,7 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" template="templates/main-template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" template="templates/main-template.xhtml" xmlns:p="http://primefaces.org/ui">
 	<ui:define name="header-title">Recipes</ui:define>
 	<ui:define name="main-content">
-
+    <script src="../js/FindRecipes.js"></script>
 
 
 		<div class="dropdown">
@@ -17,6 +17,11 @@
 			</ul>
 		</div>
 
+    <h3 style="margin-top: 0">InputNumber Slider</h3>
+    <h:panelGrid columns="1" style="margin-bottom: 10px">
+        <p:inputNumber id="nmb1" value="#{sliderView.number8}" symbol=" €" />
+        <p:slider for="nmb1" />
+    </h:panelGrid>
 
 	</ui:define>
 </ui:composition>

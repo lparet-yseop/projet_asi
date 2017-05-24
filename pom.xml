@@ -67,5 +67,11 @@
 			<artifactId>bootstrap</artifactId>
 			<version>4.0.0-alpha.6-1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.1</version>
+		</dependency>
+
 	</dependencies>
 </project>
