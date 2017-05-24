@@ -21,12 +21,14 @@ public class UserController {
      * 
      * @param bean The UserRegisterBean
      * @return The index.jsp page
-     * @throws IOException 
+     * @throws IOException
      */
     public String register( UserRegisterBean bean ) throws IOException {
-        System.out.println(bean);
-        
-        return "jsf/login.jsf";
+        System.out.println(bean.getUserBean());
+
+        // TODO plug to DAO
+
+        return "login.jsf";
     }
 
 }

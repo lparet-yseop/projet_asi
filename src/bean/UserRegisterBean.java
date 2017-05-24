@@ -1,14 +1,15 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import beans.UserBean;
 
 /**
  * User bean for register form
@@ -32,10 +33,8 @@ public class UserRegisterBean implements Serializable {
     @NotNull( message = "The name cannot be empty" )
     private String lastname;
 
-    @Digits( integer = 4, fraction = 0, message = "The value is not valid" )
-    @Min( value = 1900, message = "The value is too small" )
-    @NotNull( message = "The birth year cannot be empty" )
-    private Integer birthyear;
+    @NotNull( message = "The birth date cannot be empty" )
+    private Date birthdate;
 
     @Pattern( regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "This is not a valid email" )
     @NotNull( message = "The name cannot be empty" )
@@ -81,17 +80,17 @@ public class UserRegisterBean implements Serializable {
     }
 
     /**
-     * @return the birthyear
+     * @return the birthdate
      */
-    public Integer getBirthyear() {
-        return birthyear;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
     /**
-     * @param birthyear the birthyear to set
+     * @param birthdate the birthdate to set
      */
-    public void setBirthyear( Integer birthyear ) {
-        this.birthyear = birthyear;
+    public void setBirthdate( Date birthdate ) {
+        this.birthdate = birthdate;
     }
 
     /**
@@ -148,6 +147,22 @@ public class UserRegisterBean implements Serializable {
      */
     public void setRepeatpassword( String repeatpassword ) {
         this.repeatpassword = repeatpassword;
+    }
+
+    /**
+     * @return The user bean relative to this UserRegisterBean
+     */
+    public UserBean getUserBean() {
+        UserBean bean = new UserBean();
+
+        bean.setFirstname(firstname);
+        bean.setLastname(lastname);
+        bean.setDatebirthday(birthdate);
+        bean.setEmail(email);
+        bean.setLogin(login);
+        bean.setPassword(password);
+
+        return bean;
     }
 
 }

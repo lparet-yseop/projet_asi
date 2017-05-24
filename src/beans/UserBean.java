@@ -109,4 +109,15 @@ public class UserBean implements Serializable {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname
+                + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin + "]";
+    }
+	
+	
 }
