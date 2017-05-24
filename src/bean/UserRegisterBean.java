@@ -3,7 +3,10 @@ package bean;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -13,21 +16,55 @@ import javax.validation.constraints.Size;
  * @author Lucas Grégoire
  */
 @ManagedBean( name = "userRegisterBean" )
-@SessionScoped
+@RequestScoped
 public class UserRegisterBean implements Serializable {
 
     /** Serializable */
     private static final long serialVersionUID = -460913437505442449L;
-    
+
     @Size( min = 2, max = 50, message = "Min 2 and max 50 characters" )
-    private String lastname;
-    @Size( min = 2, max = 50, message = "Min 2 and max 50 characters" )
+    @Pattern( regexp = "^[_A-Za-z0-9-@]+", message = "This is not a valid first name" )
+    @NotNull( message = "The name cannot be empty" )
     private String firstname;
+
+    @Size( min = 2, max = 50, message = "Min 2 and max 50 characters" )
+    @Pattern( regexp = "^[_A-Za-z0-9-@]+", message = "This is not a valid last name" )
+    @NotNull( message = "The name cannot be empty" )
+    private String lastname;
+
+    @Digits( integer = 4, fraction = 0, message = "The value is not valid" )
+    @Min( value = 1990, message = "The value is too small" )
+    @NotNull( message = "The birth year cannot be empty" )
+    private Integer birthyear;
+
     @Pattern( regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "This is not a valid email" )
+    @NotNull( message = "The name cannot be empty" )
     private String email;
+
+    @Size( min = 2, max = 50, message = "Min 2 and max 50 characters" )
+    @Pattern( regexp = "^[_A-Za-z0-9-@]+", message = "This is not a valid login" )
+    @NotNull( message = "The login cannot be empty" )
     private String login;
+
+    @Size( min = 6, max = 50, message = "Min 6 and max 50 characters" )
+    @Pattern( regexp = "^[_A-Za-z0-9-@]+", message = "This is not a password" )
     private String password;
+
     private String repeatpassword;
+
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+        return firstname;
+    }
+
+    /**
+     * @param firstname the firstname to set
+     */
+    public void setFirstname( String firstname ) {
+        this.firstname = firstname;
+    }
 
     /**
      * @return the lastname
@@ -44,17 +81,17 @@ public class UserRegisterBean implements Serializable {
     }
 
     /**
-     * @return the firstname
+     * @return the birthyear
      */
-    public String getFirstname() {
-        return firstname;
+    public Integer getBirthyear() {
+        return birthyear;
     }
 
     /**
-     * @param firstname the firstname to set
+     * @param birthyear the birthyear to set
      */
-    public void setFirstname( String firstname ) {
-        this.firstname = firstname;
+    public void setBirthyear( Integer birthyear ) {
+        this.birthyear = birthyear;
     }
 
     /**
