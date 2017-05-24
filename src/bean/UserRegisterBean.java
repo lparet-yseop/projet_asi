@@ -33,7 +33,7 @@ public class UserRegisterBean implements Serializable {
     private String lastname;
 
     @Digits( integer = 4, fraction = 0, message = "The value is not valid" )
-    @Min( value = 1990, message = "The value is too small" )
+    @Min( value = 1900, message = "The value is too small" )
     @NotNull( message = "The birth year cannot be empty" )
     private Integer birthyear;
 
