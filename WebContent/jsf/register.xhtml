@@ -1,4 +1,5 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" template="templates/main-template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" template="templates/main-template.xhtml">
     <h:outputStylesheet library="css" name="css/emergency.css" target="head" />
     <ui:define name="header-title">Emergency</ui:define>
     <ui:define name="main-content">
@@ -7,57 +8,81 @@
             <div class="form-group row #{firstnameBind.valid ? '' : 'has-danger'}">
                 <label for="firstname" class="col-2 col-form-label">First name</label>
                 <div class="col-10">
-                    <h:inputText binding="#{firstnameBind}" class="form-control #{firstnameBind.valid ? '' : 'form-control-danger'}" type="text" id="firstname" name="firstname" placeholder="Ex: John" value="#{user.name}">
-                        <f:validator validatorId="validators.name" />
-                    </h:inputText>
+                    <h:inputText binding="#{firstnameBind}" id="firstname" ph:placeholder="Ex: John" value="#{userRegisterBean.firstname}"
+                        class="form-control #{firstnameBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The first name is required" />
                     <div class="form-control-feedback">
-                        <h:message for="firstname" showSummary="true"/>
+                        <h:message for="firstname" showSummary="true" showDetail="false" />
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="last-name-input" class="col-2 col-form-label">Last name</label>
+            <div class="form-group row #{lastnameBind.valid ? '' : 'has-danger'}">
+                <label for="lastname" class="col-2 col-form-label">Last name</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" id="last-name-input" name="lastname" placeholder="Ex: Doe"></input>
-                    <div class="form-control-feedback"></div>
+                    <h:inputText binding="#{lastnameBind}" id="lastname" ph:placeholder="Ex: Doe" value="#{userRegisterBean.lastname}"
+                        class="form-control #{lastnameBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The last name is required" />
+                    <div class="form-control-feedback">
+                        <h:message for="lastname" showSummary="true" showDetail="false" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group row has-danger">
-                <label for="age-input" class="col-2 col-form-label">Age</label>
+            <div class="form-group row #{birthyearBind.valid ? '' : 'has-danger'}">
+                <label for="lastname" class="col-2 col-form-label">Birth year</label>
                 <div class="col-10">
-                    <input class="form-control form-control-danger" type="number" id="age-input" name="age" placeholder="Ex: 34"></input>
-                    <div class="form-control-feedback">Error</div>
+                    <h:inputText binding="#{birthyearBind}" id="birthyear" ph:type="number" ph:placeholder="Ex: 1990" value="#{userRegisterBean.birthyear}"
+                        class="form-control #{birthyearBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The birth year is required" />
+                    <div class="form-control-feedback">
+                        <h:message for="birthyear" showSummary="true" showDetail="false" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="email-input" class="col-2 col-form-label">Email</label>
+            <div class="form-group row #{emailBind.valid ? '' : 'has-danger'}">
+                <label for="email" class="col-2 col-form-label">Email</label>
                 <div class="col-10">
-                    <input class="form-control" type="email" id="email-input" name="email" placeholder="Ex: john.doe@gmail.com"></input>
+                    <h:inputText binding="#{emailBind}" id="email" ph:placeholder="Ex: john.doe@gmail.com" value="#{userRegisterBean.email}"
+                        class="form-control #{emailBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The email is required" />
+                    <div class="form-control-feedback">
+                        <h:message for="email" showSummary="true" showDetail="false" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="login-input" class="col-2 col-form-label">Login</label>
+            <div class="form-group row #{loginBind.valid ? '' : 'has-danger'}">
+                <label for="login" class="col-2 col-form-label">Login</label>
                 <div class="col-10">
-                    <input class="form-control" type="text" id="login-input" name="login" placeholder="Ex: jdoe"></input>
+                    <h:inputText binding="#{loginBind}" id="login" ph:placeholder="Ex: jdoe" value="#{userRegisterBean.login}"
+                        class="form-control #{loginBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The login is required" />
+                    <div class="form-control-feedback">
+                        <h:message for="login" showSummary="true" showDetail="false" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="password-input" class="col-2 col-form-label">Password</label>
+            <div class="form-group row #{passwordBind.valid ? '' : 'has-danger'}">
+                <label for="password" class="col-2 col-form-label">Password</label>
                 <div class="col-10">
-                    <input class="form-control" type="password" id="password-input" name="password" placeholder="Please enter your password"></input>
+                    <h:inputSecret binding="#{passwordBind}" id="password" ph:placeholder="Please enter your password" value="#{userRegisterBean.password}"
+                        class="form-control #{passwordBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The password is required">
+                        <f:validator validatorId="passwordConfirmationValidator" />
+                        <f:attribute name="confirmPassword" value="#{passwordrepeatBind}" />
+                    </h:inputSecret>
+                    <div class="form-control-feedback">
+                        <h:message for="password" showSummary="true" showDetail="false" />
+                    </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="password-repeat-input" class="col-2 col-form-label">Repeat password</label>
+            <div class="form-group row #{passwordrepeatBind.valid ? '' : 'has-danger'}">
+                <label for="passwordrepeat" class="col-2 col-form-label">Password repeat</label>
                 <div class="col-10">
-                    <input class="form-control" type="password" id="password-repeat-input" name="passwordrepeat" placeholder="Please repeat your password"></input>
+                    <h:inputSecret binding="#{passwordrepeatBind}" id="passwordrepeat" ph:placeholder="Please repeat your password" value="#{userRegisterBean.repeatpassword}"
+                        class="form-control #{passwordrepeatBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The repeated password is required" />
+                    <div class="form-control-feedback">
+                        <h:message for="passwordrepeat" showSummary="true" showDetail="false" />
+                    </div>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="text-right">
                         <h:commandButton type="submit" class="btn btn-warning" value="Cancel" />
-                        <h:commandButton type="submit" class="btn btn-success ml-2" value="Register" />
+                        <h:commandButton type="submit" class="btn btn-success ml-2" value="Register" action="result" />
                         <a href="login.jsf" class="btn btn-primary">Connexion</a>
                     </div>
                 </div>
