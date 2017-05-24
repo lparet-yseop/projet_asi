@@ -9,62 +9,73 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ * Abstract validator class
+ * 
+ * @author Hugo Blanc, Lucas Gr√©goire
+ */
 public abstract class AbstractValidator implements Validator {
 
-	private static final String ABSTRACT_PATTERN = "^[_A-Za-z0-9-@]+";
+    private static final String ABSTRACT_PATTERN = "^[_A-Za-z0-9-@]+";
+    private static final String VALIDATION_ERROR_MESSAGE = "The field validation failed.";
+    private static final String EMPTY_MESSAGE = "This field cannot be empty.";
+    private static final String BAD_FORMAT_MESSAGE = "This field isn't in the correct format \"%s\".";
 
-	private Pattern pattern;
-	private Matcher matcher;
-	private String descriptor = "Ce champs "; // String used to generate error
-												// messages
+    private String formatMessage;
+    protected Pattern pattern;
+    protected Matcher matcher;
 
-	/**
-	 * Default constructor with use the default pattern "^[_A-Za-z0-9-@]+"
-	 */
-	public AbstractValidator() {
-		this.pattern = Pattern.compile(ABSTRACT_PATTERN);
-	}
+    /**
+     * Default constructor with use the default pattern "^[_A-Za-z0-9-@]+"
+     */
+    public AbstractValidator() {
+        this.pattern = Pattern.compile(ABSTRACT_PATTERN);
+    }
 
-	/**
-	 * Abstract constructor which use a pattern in string format
-	 * 
-	 * @param pattern
-	 */
-	public AbstractValidator(String pattern) {
-		this.pattern = Pattern.compile(pattern);
-	}
+    /**
+     * Abstract constructor which use a pattern in string format
+     * 
+     * @param pattern The pattern
+     */
+    public AbstractValidator(String pattern) {
+        this(pattern, pattern);
+    }
 
-	/**
-	 * Absatrc constructor which used a pattern
-	 * 
-	 * @param pattern
-	 */
-	public AbstractValidator(Pattern pattern) {
-		this.pattern = pattern;
-	}
+    /**
+     * Abstract constructor which use a pattern in string format
+     * 
+     * @param pattern The pattern
+     * @param formatMessage The format message
+     */
+    public AbstractValidator(String pattern, String formatMessage) {
+        this.formatMessage = formatMessage;
+        this.pattern = Pattern.compile(pattern);
+    }
 
-	@Override
-	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+    /**
+     * Absatrc constructor which used a pattern
+     * 
+     * @param pattern
+     */
+    public AbstractValidator(Pattern pattern) {
+        this.pattern = pattern;
+    }
 
-		if (value.toString() != null) {
+    @Override
+    public void validate( FacesContext context, UIComponent component, Object value ) throws ValidatorException {
+        matcher = pattern.matcher(value.toString());
 
-			matcher = pattern.matcher(value.toString());
+        if (value.toString().length() == 0) {
+            FacesMessage msg = new FacesMessage(VALIDATION_ERROR_MESSAGE, EMPTY_MESSAGE);
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(msg);
+        }
+        if (!matcher.matches()) {
+            FacesMessage msg = new FacesMessage(VALIDATION_ERROR_MESSAGE, String.format(BAD_FORMAT_MESSAGE, this.formatMessage));
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(msg);
+        }
 
-			if (!matcher.matches()) {
-
-				FacesMessage msg = new FacesMessage(this.descriptor + "validation failed.",
-						this.descriptor + " Validation failed please follow the contraint " + this.pattern.toString());
-				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-				throw new ValidatorException(msg);
-
-			}
-
-		} else {
-			FacesMessage msg = new FacesMessage(this.descriptor + " ne peut pas Ítre vide",
-					"Vous devez les renseigner ");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			throw new ValidatorException(msg);
-		}
-	}
+    }
 
 }
