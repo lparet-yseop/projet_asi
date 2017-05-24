@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -13,12 +14,36 @@ public class UserBean implements Serializable {
 	private int id;
 	private String login;
 	private String password;
-	private String name;
+	private String firstname;
 	private String lastname;
-	private int age;
+	private Date datebirthday;
 	private String email;
-	
+	private Boolean admin;
+
 	public UserBean() {
+	}
+
+	public UserBean(String login, String password, String firstname, String lastname, Date datebirthday, String email) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.datebirthday = datebirthday;
+		this.email = email;
+	}
+
+	public UserBean(int id, String login, String password, String firstname, String lastname, Date datebirthday, String email,
+			Boolean admin) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.datebirthday = datebirthday;
+		this.email = email;
+		this.admin = admin;
 	}
 
 	public int getId() {
@@ -45,12 +70,12 @@ public class UserBean implements Serializable {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	public String getLastname() {
@@ -61,12 +86,12 @@ public class UserBean implements Serializable {
 		this.lastname = lastname;
 	}
 
-	public int getAge() {
-		return age;
+	public Date getDatebirthday() {
+		return datebirthday;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setDatebirthday(Date datebirthday) {
+		this.datebirthday = datebirthday;
 	}
 
 	public String getEmail() {
@@ -77,6 +102,11 @@ public class UserBean implements Serializable {
 		this.email = email;
 	}
 
-	
-	
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
 }
