@@ -155,7 +155,7 @@ public class UserRegisterBean implements Serializable {
 
         bean.setFirstname(firstname);
         bean.setLastname(lastname);
-        //bean.setDatebirthday(birthdate);
+        bean.setDatebirthday(birthdate);
         bean.setEmail(email);
         bean.setLogin(login);
         bean.setPassword(password);

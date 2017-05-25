@@ -68,6 +68,7 @@ public class UserController implements Serializable {
     // method to redirect to other page
     public void redirectTo(String page) {
     	ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+    	context.getFlash().setKeepMessages(true);
         try {
 			context.redirect(context.getRequestContextPath() + "/jsf/" + page + ".jsf");
 		} catch (IOException e) {
@@ -83,8 +84,13 @@ public class UserController implements Serializable {
     // Register : add user
 	public void register(UserRegisterBean user) {
 		UserDao userDao = UserDao.getInstance();
-
-		userDao.add(user.getFirstname(), user.getLastname(), user.getBirthdate(), user.getLogin(),
+		Boolean res = userDao.add(user.getFirstname(), user.getLastname(), user.getBirthdate(), user.getLogin(),
 				user.getEmail(), user.getPassword());
+		if(res) {
+			addMessage(FacesMessage.SEVERITY_INFO, "Inscription réalisé");
+			redirectTo("login");
+		} else {
+			addMessage(FacesMessage.SEVERITY_WARN, "Echec de l'inscription");
+		}
 	}
 }
