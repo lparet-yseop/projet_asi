@@ -6,7 +6,7 @@ import java.sql.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-@ManagedBean
+@ManagedBean( name = "userBean" )
 @SessionScoped
 public class UserBean implements Serializable {
 	

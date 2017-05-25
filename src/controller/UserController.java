@@ -1,11 +1,20 @@
 package controller;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
-import javax.faces.bean.ApplicationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
-import bean.UserRegisterBean;
+import beans.UserBean;
+import beans.UserRegisterBean;
+import beans.Util;
+import dao.UserDao;
 
 /**
  * Controller for users management
@@ -13,22 +22,69 @@ import bean.UserRegisterBean;
  * @author Lucas Grégoire
  */
 @ManagedBean( name = "userController" )
-@ApplicationScoped
-public class UserController {
+@ViewScoped
+public class UserController implements Serializable {
 
-    /**
-     * Register the User and redirect to home
-     * 
-     * @param bean The UserRegisterBean
-     * @return The index.jsp page
-     * @throws IOException
-     */
-    public String register( UserRegisterBean bean ) throws IOException {
-        System.out.println(bean.getUserBean());
+	private static final long serialVersionUID = 1L;
 
-        // TODO plug to DAO
+	// Get all Users on Database
+	public List<UserBean> getAllUsers() {
+		UserDao userDao = UserDao.getInstance();
 
-        return "activities.jsf";
+		List<UserBean> list = userDao.getAll();
+
+		return list;
+	}
+
+	// Get User by id
+	public UserBean getUser(int userId) {
+		UserDao userDao = UserDao.getInstance();
+
+		UserBean user = userDao.getUser(userId);
+
+		return user;
+	}
+
+	// Get user by login, used for the connexion
+	public void getUserByLogin(String login, String password) {
+		UserDao userDao = UserDao.getInstance();
+
+		UserBean user = userDao.getUserByLogin(login, password);
+
+		if(user != null) {
+			redirectTo("activities");
+		} else {
+			logout();
+			addMessage(FacesMessage.SEVERITY_WARN, "Connexion échouée");
+		}
+	}
+    
+	// Create a notification message
+    public void addMessage(Severity severity, String texte) {
+        FacesMessage message = new FacesMessage(severity, texte,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    // method to redirect to other page
+    public void redirectTo(String page) {
+    	ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+			context.redirect(context.getRequestContextPath() + "/jsf/" + page + ".jsf");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    // Logout
+    public void logout() {
+        Util.getSession().invalidate();
+    }
+    
+    // Register : add user
+	public void register(UserRegisterBean user) {
+		UserDao userDao = UserDao.getInstance();
+
+		userDao.add(user.getFirstname(), user.getLastname(), user.getBirthdate(), user.getLogin(),
+				user.getEmail(), user.getPassword());
+	}
 }

@@ -30,12 +30,11 @@
                 <div class="col-sm-12">
                     <div class="text-right">
                         <h:commandButton type="submit" class="btn btn-warning" value="Cancel" />
-                        <p:commandButton type="submit" update="growl" class="btn btn-success ml-2" value="Connexion" actionListener="#{userControler.getUserByLogin(userBean.login, userBean.password)}" />
+                        <p:commandButton type="submit" update="growl" class="btn btn-success ml-2" value="Connexion" actionListener="#{userController.getUserByLogin(userBean.login, userBean.password)}" />
                         <a href="register.jsf" class="btn btn-primary">Register</a>
                     </div>
                 </div>
             </div>
-            #{userBean.login}
 		</h:form>
 	</ui:define>
 </ui:composition>
