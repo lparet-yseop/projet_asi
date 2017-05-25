@@ -1,19 +1,25 @@
 package controler;
 
-import java.util.Calendar;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import beans.UserBean;
+import beans.Util;
 import dao.UserDao;
 
 @ManagedBean
-@ApplicationScoped
-public class UserControler {
+@ViewScoped
+public class UserControler implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public boolean addUser(UserBean user) {
 		UserDao userDao = UserDao.getInstance();
@@ -40,38 +46,34 @@ public class UserControler {
 		return user;
 	}
 
-	public String getUserByLogin(String login, String password) {
+	public void getUserByLogin(String login, String password) {
 		UserDao userDao = UserDao.getInstance();
 
 		UserBean user = userDao.getUserByLogin(login, password);
 
 		if(user != null) {
-			return "activities.jsp";
+			redirectTo("activities");
 		} else {
-			addMessage("Connexion Refusée");
-			return null;
+			logout();
+			addMessage(FacesMessage.SEVERITY_WARN, "Connexion échouée");
 		}
 	}
      
-    public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, summary,  null);
+    public void addMessage(Severity severity, String texte) {
+        FacesMessage message = new FacesMessage(severity, texte,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-	/**
-	 * To test
-	 * 
-	 */
-	public static void main(String[] args) {
-		UserControler uc = new UserControler();
-		UserBean user = new UserBean("louis", "louis", "louis", "paret", new java.sql.Date(Calendar.getInstance().getTime().getTime()), "louis.paret@gmail.com");
-		boolean addUser = uc.addUser(user);
-		System.out.println("User add: " + addUser);
-
-		List<UserBean> allUsers = uc.getAllUsers();
-		for(UserBean u : allUsers) {
-			System.out.println(u.getFirstname());
+    public void redirectTo(String page) {
+    	ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+			context.redirect(context.getRequestContextPath() + "/jsf/" + page + ".jsf");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		
-	}
+    }
+    
+    public void logout() {
+        Util.getSession().invalidate();
+     }
 }
