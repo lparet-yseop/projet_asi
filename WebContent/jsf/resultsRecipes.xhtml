@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" template="templates/main-template.xhtml">
+
+	<ui:define name="header-title">Result receipes</ui:define>
+	<ui:define name="main-content">
+
+
+
+		<h:form id="form">
+			<p:dataGrid var="receipe" value="#{receipeController.receipes}"  columns="3" layout="grid" rows="12" paginator="true" id="receipes"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="6,12,16">
+
+				<f:facet name="header">
+		            Receipes Available
+		        </f:facet>
+
+					<p:panelGrid columns="2" columnClasses="label,value" actionListener="#{receipeController.goToDetail()}">
+						<f:facet name="header">
+						#{receipe.title}
+<!-- 							<p:graphicImage name="#{receipe.pathPhoto}" /> -->
+						</f:facet>
+
+
+
+						<h:outputText value="Difficulty:" />
+						<h:outputText value="#{receipe.difficulty}" style="font-weight: bold" />
+
+						<h:outputText value="Number of eatters:" />
+						<h:outputText value="#{receipe.nbPeople}" style="font-weight: bold" />
+
+						<h:outputText value="Type:" />
+						<h:outputText value="#{receipe.cookTypeBean.text}" style="font-weight: bold" />
+
+						<p:commandButton  action="#{receipeController.goToDetail()}" icon="ui-icon ui-icon-search" />
+				</p:panelGrid>
+
+			</p:dataGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+
+

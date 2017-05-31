@@ -1,13 +1,18 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
+import beans.CookTypeBean;
 import beans.ReceipeBean;
 import dao.ReceipeDao;
 
 @ManagedBean
+//@ViewScoped
 public class ReceipeController {
 
 //	public boolean addReceipt(ReceipeBean receipe) {
@@ -32,6 +37,19 @@ public class ReceipeController {
 //	}
 	
 	public int cookType;
+	public int duration;
+	public int nbPeople;
+	public List<ReceipeBean> receipes;
+	public ReceipeBean selectedReceipe; 
+	
+
+
+	public ReceipeController() {
+		super();
+		receipes = new ArrayList<ReceipeBean>();
+	}
+	
+
 
 	public List<ReceipeBean> getAllReceipes() {
 		ReceipeDao receipeDao = ReceipeDao.getInstance();
@@ -41,6 +59,12 @@ public class ReceipeController {
 		return list;
 	}
 
+	
+	public String goToDetail(ReceipeBean receipeBean){
+		this.selectedReceipe = receipeBean;
+		return "detailReceip";
+	}
+	
 	public ReceipeBean getReceipe(int receipeId) {
 		ReceipeDao receipeDao = ReceipeDao.getInstance();
 
@@ -50,12 +74,19 @@ public class ReceipeController {
 	}
 
 
-	public List<ReceipeBean> getReceipesByCriteria(){
+	public String getReceipesByCriteria(){
 		ReceipeDao receipeDao = ReceipeDao.getInstance();
 
-		List<ReceipeBean> list = receipeDao.getAll();
-
-		return list;
+		ReceipeBean receipeBean = new ReceipeBean();
+		if(duration > 0) receipeBean.setDuration(duration);
+		CookTypeBean cookTypeBean = new CookTypeBean();
+		cookTypeBean.setId(cookType);
+		if(cookType > 0 ) receipeBean.setCookTypeBean(cookTypeBean);
+		if(nbPeople > 0 ) receipeBean.setNbPeople(nbPeople);
+		List<ReceipeBean> list = receipeDao.findByCriteria(receipeBean);
+		receipes = list;
+		//return list;
+		return "resultsRecipes";
 	}
 
 	public int getCookType() {
@@ -65,6 +96,39 @@ public class ReceipeController {
 	public void setCookType(int cookType) {
 		this.cookType = cookType;
 	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public int getNbPeople() {
+		return nbPeople;
+	}
+
+	public void setNbPeople(int nbPeople) {
+		this.nbPeople = nbPeople;
+	}
+
+	public List<ReceipeBean> getReceipes() {
+		return receipes;
+	}
+
+	public void setReceipes(List<ReceipeBean> receipes) {
+		this.receipes = receipes;
+	}
+
+	public ReceipeBean getSelectedReceipe() {
+		return selectedReceipe;
+	}
+
+	public void setSelectedReceipe(ReceipeBean selectedReceipe) {
+		this.selectedReceipe = selectedReceipe;
+	}
+	
 	
 	
 	

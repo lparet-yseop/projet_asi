@@ -182,7 +182,7 @@ public class ReceipeDao extends Dao {
 
 	public List<ReceipeBean> findByCriteria(ReceipeBean receipeBean) {
 		List<ReceipeBean> receiptList = new ArrayList<ReceipeBean>();
-		String WHERE_CLAUSE = " ";
+		String WHERE_CLAUSE = "";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -199,12 +199,13 @@ public class ReceipeDao extends Dao {
 				}
 				
 				if(receipeBean.getCookTypeBean() != null){
-					if(WHERE_CLAUSE.length() > 1 ) WHERE_CLAUSE +=" , AND ";
-					WHERE_CLAUSE += "";
+					CookTypeBean cookTypeBean = receipeBean.getCookTypeBean();
+					if(WHERE_CLAUSE.length() > 1 ) WHERE_CLAUSE +="  AND ";
+					WHERE_CLAUSE += "COT.COT_ID = "+ cookTypeBean.getId();
 				}
 				
 				if(receipeBean.getDuration() > 0){
-					if(WHERE_CLAUSE.length() > 1 ) WHERE_CLAUSE +=", AND ";
+					if(WHERE_CLAUSE.length() > 1 ) WHERE_CLAUSE +=" AND ";
 					WHERE_CLAUSE += "REC_DURATION = "+ receipeBean.getDuration();
 				}
 				
@@ -213,12 +214,16 @@ public class ReceipeDao extends Dao {
 					//if(WHERE_CLAUSE.length() > 1 ) WHERE_CLAUSE +="";
 					WHERE_CLAUSE += "REC_DIFFICULTY = " + receipeBean.getDifficulty();
 				}
+				
+				if(WHERE_CLAUSE.length() > 0 ) WHERE_CLAUSE = " WHERE " + WHERE_CLAUSE;
+				
+				
 						
 			}
 			
-			
+			String stringQuery = Request.SELECT_WITHOUT_CRITERIA.getQuery() + Request.INNER_JOIN_COOK_TYPE.getQuery() + WHERE_CLAUSE;
 			// Executer puis parcourir les résultats
-			ResultSet rs = query.executeQuery(Request.SELECT_WITHOUT_CRITERIA.getQuery() + Request.INNER_JOIN_COOK_TYPE.getQuery() + WHERE_CLAUSE );
+			ResultSet rs = query.executeQuery( stringQuery );
 
 			while (rs.next()) {
 				ReceipeBean receipe = new ReceipeBean();

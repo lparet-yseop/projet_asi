@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" template="templates/main-template.xhtml">
+
+	<ui:define name="header-title">Result receipes</ui:define>
+	<ui:define name="main-content">
+
+
+
+		<h:form id="form">
+
+			<f:facet name="header">
+            		#{receipeController.selectedReceipe.title}			
+        	</f:facet>
+
+			<p:panelGrid columns="2" columnClasses="label,value">
+
+				<h:outputText value="Title:" />
+				<h:outputText value="#{receipeController.selectedReceipe.title}" style="font-weight: bold" />
+
+				<h:outputText value="Description:" />
+				<h:outputText value="#{receipeController.selectedReceipe.description}" style="font-weight: bold" />
+
+				<h:outputText value="Difficulty:" />
+				<h:outputText value="#{receipeController.selectedReceipe.difficulty}" style="font-weight: bold" />
+
+				<h:outputText value="Number of eatters:" />
+				<h:outputText value="#{receipeController.selectedReceipe.nbPeople}" style="font-weight: bold" />
+
+				<h:outputText value="Type:" />
+				<h:outputText value="#{receipeController.selectedReceipe.cookTypeBean.text}" style="font-weight: bold" />
+
+
+			</p:panelGrid>
+
+		</h:form>
+
+
+
+	</ui:define>
+</ui:composition>
+
+
+
+
