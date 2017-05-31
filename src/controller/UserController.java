@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import beans.UserBean;
+import beans.UserCounter;
 import beans.UserRegisterBean;
 import beans.Util;
 import dao.UserDao;
@@ -26,6 +27,7 @@ import dao.UserDao;
 public class UserController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private UserCounter userCounter = new UserCounter();
 
 	// Get all Users on Database
 	public List<UserBean> getAllUsers() {
@@ -48,10 +50,10 @@ public class UserController implements Serializable {
 	// Get user by login, used for the connexion
 	public void getUserByLogin(String login, String password) {
 		UserDao userDao = UserDao.getInstance();
-
 		UserBean user = userDao.getUserByLogin(login, password);
 
 		if(user != null) {
+			userCounter.addUserConnected();
 			redirectTo("activities");
 		} else {
 			logout();
@@ -79,6 +81,7 @@ public class UserController implements Serializable {
     // Logout
     public void logout() {
         Util.getSession().invalidate();
+        userCounter.deleteUserConnected();
     }
     
     // Register : add user
