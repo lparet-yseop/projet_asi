@@ -303,6 +303,52 @@ public class TableManager<T> {
         stmt.executeUpdate();
     }
 
+    /**
+     * Delete the entity in the table
+     * 
+     * @param entity The entity object
+     * @return The status of the deletion
+     */
+    public boolean delete( T entity ) {
+        try {
+            return execDelete(entity);
+        }
+        catch (IllegalArgumentException | IllegalAccessException | UnknownTableNameException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean execDelete( T entity ) throws UnknownTableNameException, IllegalArgumentException, IllegalAccessException, SQLException {
+        String tableName = DbAnnotationsManager.getTableName(entity.getClass());
+
+        Map<Field, String> keys = DbAnnotationsManager.getPrimaryKeysMap(entity.getClass());
+        StringBuilder clause = new StringBuilder("DELETE FROM " + tableName + " WHERE ");
+        boolean first = true;
+
+        // Generate where clause
+        first = true;
+        for (Entry<Field, String> field : keys.entrySet()) {
+            if (!first) {
+                clause.append(", ");
+            }
+            clause.append(field.getValue() + " = ?");
+            first = false;
+        }
+
+        // Preparing statement
+        PreparedStatement stmt = DBAccess.getConnection().prepareStatement(clause.toString());
+        int i = 0;
+
+        // Primary
+        for (Entry<Field, String> field : keys.entrySet()) {
+            field.getKey().setAccessible(true);
+            stmt.setObject(++i, field.getKey().get(entity));
+        }
+
+        return stmt.executeUpdate() > 0;
+    }
+
     @SuppressWarnings( "unchecked" )
     private List<T> fromResultSet( Class<?> entityClass, ResultSet resultSet )
             throws InstantiationException, IllegalAccessException, IllegalArgumentException, SQLException {
@@ -334,15 +380,20 @@ public class TableManager<T> {
     public static void main( String[] args ) {
         // UserBean bean = new UserBean();
         // bean.setId(17);
-        // // bean.setFirstname("testInsertFirstName");
-        // // bean.setLastname("lastazeazeName");
-        // // bean.setPassword("hello");
-        // // bean.setDatebirthday(new Date());
-        // // bean.setEmail("lucas@lsge.fr");
+        // bean.setFirstname("testInsertFirstName");
+        // bean.setLastname("lastazeazeName");
+        // bean.setPassword("testtest");
+        // bean.setDatebirthday(new Date());
+        // bean.setEmail("lucas@lsge.fr");
+        // bean.setLogin("lucas");
         //
         // TableManager<UserBean> mng = new TableManager<UserBean>();
         //
-        // System.out.println(mng.select(bean));
+        // System.out.println(mng.selectAll(UserBean.class));
+        //
+        // mng.insert(bean);
+        //
+        // System.out.println(mng.selectAll(UserBean.class));
     }
 
 }

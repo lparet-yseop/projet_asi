@@ -54,8 +54,7 @@ public class AbstractDAO<T> implements DAO<T> {
 
     @Override
     public boolean delete( T entity ) {
-        // TODO Auto-generated method stub
-        return false;
+        return manager.delete(entity);
     }
 
 }
