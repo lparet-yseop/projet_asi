@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import beans.UserCounter;
+import beans.utils.UserCounter;
 
 @ManagedBean( name = "userCounterController" )
 @ViewScoped

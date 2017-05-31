@@ -9,13 +9,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import beans.UserBean;
-import beans.UserCounter;
-import beans.UserLoginBean;
-import beans.UserRegisterBean;
-import beans.Util;
+import beans.form.UserLoginBean;
+import beans.form.UserRegisterBean;
+import beans.utils.SessionUtil;
+import beans.utils.UserCounter;
 import dao.impl.UserDAO;
 
 /**
@@ -50,6 +49,7 @@ public class UserController implements Serializable {
     public void redirectTo( String page ) {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         context.getFlash().setKeepMessages(true);
+
         try {
             context.redirect(context.getRequestContextPath() + "/jsf/" + page + ".jsf");
         }
@@ -68,8 +68,7 @@ public class UserController implements Serializable {
         UserBean bean = userDao.getUserAdminByLogin(loginBean.getUserBean());
 
         if (bean != null) {
-            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            session.setAttribute("userBean", bean);
+            SessionUtil.setUserBean(bean);
             userCounter.addUserConnected();
 
             redirectTo("activities");
@@ -101,7 +100,7 @@ public class UserController implements Serializable {
      * Logout the user
      */
     public void logout() {
-        Util.getSession().invalidate();
+        SessionUtil.clearSession();
         userCounter.deleteUserConnected();
     }
 }

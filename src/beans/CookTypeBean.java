@@ -1,49 +1,68 @@
 package beans;
 
-public class CookTypeBean {
+import java.io.Serializable;
 
-	public int id;
-	public String text;
-	
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
+import dao.annotation.DBColumn;
+import dao.annotation.DBTable;
 
-	public CookTypeBean() {
-		super();
-	}
+/**
+ * Cook type bean
+ * 
+ * @author Louis Paret, Lucas Grégoire
+ */
+@ManagedBean( name = "cookTypeBean" )
+@SessionScoped
+@DBTable( "T_E_USER_USR" )
+public class CookTypeBean implements Serializable {
 
-	public CookTypeBean(String text) {
-		super();
-		this.text = text;
-	}
+    /** Serializable id */
+    private static final long serialVersionUID = -5388685879696441316L;
 
-	public CookTypeBean(int id, String text) {
-		super();
-		this.id = id;
-		this.text = text;
-	}
+    @DBColumn( value = "cot_id", primaryKey = true )
+    private int id;
+    @DBColumn( "cot_text" )
+    private String text;
 
-	public int getId() {
-		return id;
-	}
+    /**
+     * Constructs a new CookTypeBean
+     */
+    public CookTypeBean() {
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
 
-	public String getText() {
-		return text;
-	}
+    /**
+     * @param id the id to set
+     */
+    public void setId( int id ) {
+        this.id = id;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    /**
+     * @return the text
+     */
+    public String getText() {
+        return text;
+    }
 
+    /**
+     * @param text the text to set
+     */
+    public void setText( String text ) {
+        this.text = text;
+    }
 
-	@Override
-	public String toString() {
-		return "CookType [id=" + id + ", text=" + text + "]";
-	}
-	
-	
-	
+    @Override
+    public String toString() {
+        return "CookType [id=" + id + ", text=" + text + "]";
+    }
+
 }
