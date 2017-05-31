@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import beans.UserBean;
 import dao.annotation.DbAnnotationsManager;
 import dao.utils.DBAccess;
 import dao.utils.UnknownTableNameException;
@@ -25,6 +26,32 @@ public class TableManager<T> {
      * Constructor of Table manager
      */
     public TableManager() {
+    }
+
+    /**
+     * Execute a select with custom request and parameters
+     * 
+     * @param instanceClass The type class to return
+     * @param request The request
+     * @param parameters The list of parameters
+     * @return The bean returned or null
+     */
+    public T executeSelect( Class<UserBean> instanceClass, String request, List<Object> parameters ) {
+        try {
+            // Preparing statement
+            PreparedStatement stmt = DBAccess.getConnection().prepareStatement(request);
+            int i = 0;
+
+            // Setting parameters
+            for (Object obj : parameters)
+                stmt.setObject(++i, obj);
+
+            ResultSet rs = stmt.executeQuery();
+            return fromResultSet(instanceClass, rs).get(0);
+        }
+        catch (IndexOutOfBoundsException | InstantiationException | IllegalAccessException | IllegalArgumentException | SQLException e) {
+            return null;
+        }
     }
 
     /**

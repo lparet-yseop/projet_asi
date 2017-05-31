@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.faces.bean.ApplicationScoped;
+
 /**
  * Database connector access
  * 
  * @author Lucas Grégoire
  */
+@ApplicationScoped
 public class DBAccess {
 
     private static final String URL = "jdbc:mysql://163.172.91.2:3306/projetJEE";

@@ -26,6 +26,22 @@ public interface DAO<T> {
     public T findOneById( Integer id );
 
     /**
+     * Insert an entity
+     * 
+     * @param entity The entity to insert
+     * @return The entity inserted
+     */
+    public T insert( T entity );
+
+    /**
+     * Update an entity
+     * 
+     * @param entity The entity to update
+     * @return The entity inserted
+     */
+    public T update( T entity );
+
+    /**
      * Insert or update an entity
      * 
      * @param entity The entity to save

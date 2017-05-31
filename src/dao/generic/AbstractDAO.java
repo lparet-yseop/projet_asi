@@ -2,12 +2,15 @@ package dao.generic;
 
 import java.util.List;
 
+import javax.faces.bean.ApplicationScoped;
+
 /**
  * The dao implementation of basic CRUD methods
  * 
  * @author Lucas Grégoire
  * @param <T> The type of entities
  */
+@ApplicationScoped
 public class AbstractDAO<T> implements DAO<T> {
 
     protected TableManager<T> manager;
@@ -26,6 +29,18 @@ public class AbstractDAO<T> implements DAO<T> {
     @Override
     public T findOneById( Integer id ) {
         return manager.selectById(id, instanceClass);
+    }
+
+    @Override
+    public T insert( T entity ) {
+        manager.insert(entity);
+        return manager.select(entity);
+    }
+
+    @Override
+    public T update( T entity ) {
+        manager.update(entity);
+        return manager.select(entity);
     }
 
     @Override

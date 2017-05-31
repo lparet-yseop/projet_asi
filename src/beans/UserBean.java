@@ -19,7 +19,7 @@ import dao.annotation.DBTable;
 @DBTable( "T_E_USER_USR" )
 public class UserBean implements Serializable {
 
-    /** Serial ID */
+    /** Serializable id */
     private static final long serialVersionUID = -2920686139621697269L;
 
     @DBColumn( value = "usr_id", primaryKey = true )
@@ -39,29 +39,10 @@ public class UserBean implements Serializable {
     @DBColumn( "usr_admin" )
     private Boolean admin;
 
+    /**
+     * Constructs a new UserBean
+     */
     public UserBean() {
-    }
-
-    public UserBean(String login, String password, String firstname, String lastname, Date datebirthday, String email) {
-        super();
-        this.login = login;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.datebirthday = datebirthday;
-        this.email = email;
-    }
-
-    public UserBean(int id, String login, String password, String firstname, String lastname, Date datebirthday, String email, Boolean admin) {
-        super();
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.datebirthday = datebirthday;
-        this.email = email;
-        this.admin = admin;
     }
 
     /**
