@@ -3,110 +3,153 @@ package beans;
 public class ReceipeBean {
 
 	private int id;
-	private String name;
-	private String details;
-	private String resume;
-	private int nbPersons;
-	private int complexity;
-	private String type;
-	private String image;
+	private int duration;
+	private int difficulty;
+	private int nbPeople;
+	private String title;
+	private String description;
+	private String pathPhoto;
+	private CookTypeBean cookTypeBean;
 
 	public ReceipeBean() {
 	}
 
-	public ReceipeBean(String name, String details, String resume, int nbPersons, int complexity, String type, String image) {
+	
+	
+	public ReceipeBean(int duration, int difficulty, int nbPeople, String title, String description, String pathPhoto,
+			CookTypeBean cookTypeBean) {
 		super();
-		this.name = name;
-		this.details = details;
-		this.resume = resume;
-		this.nbPersons = nbPersons;
-		this.complexity = complexity;
-		this.type = type;
-		this.image=image;
+		this.duration = duration;
+		this.difficulty = difficulty;
+		this.nbPeople = nbPeople;
+		this.title = title;
+		this.description = description;
+		this.pathPhoto = pathPhoto;
+		this.cookTypeBean = cookTypeBean;
 	}
 
-	public ReceipeBean(int id, String name, String details, String resume, int nbPersons, int complexity, String type, String image) {
+
+	public ReceipeBean(int id, int duration, int difficulty, int nbPeople, String title, String description,
+			String pathPhoto, CookTypeBean cookTypeBean) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.details = details;
-		this.resume = resume;
-		this.nbPersons = nbPersons;
-		this.complexity = complexity;
-		this.type = type;
-		this.image=image;
+		this.duration = duration;
+		this.difficulty = difficulty;
+		this.nbPeople = nbPeople;
+		this.title = title;
+		this.description = description;
+		this.pathPhoto = pathPhoto;
+		this.cookTypeBean = cookTypeBean;
 	}
+
+
 
 	public int getId() {
 		return id;
 	}
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+
+
+	public int getDuration() {
+		return duration;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
-	public String getDetails() {
-		return details;
+
+
+	public int getDifficulty() {
+		return difficulty;
 	}
 
-	public void setDetails(String details) {
-		this.details = details;
+
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 
-	public String getResume() {
-		return resume;
+
+
+	public int getNbPeople() {
+		return nbPeople;
 	}
 
-	public void setResume(String resume) {
-		this.resume = resume;
+
+
+	public void setNbPeople(int nbPeople) {
+		this.nbPeople = nbPeople;
 	}
 
-	public int getNbPersons() {
-		return nbPersons;
+
+
+	public String getTitle() {
+		return title;
 	}
 
-	public void setNbPersons(int nbPersons) {
-		this.nbPersons = nbPersons;
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public int getComplexity() {
-		return complexity;
+
+
+	public String getDescription() {
+		return description;
 	}
 
-	public void setComplexity(int complexity) {
-		this.complexity = complexity;
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getType() {
-		return type;
+
+
+	public String getPathPhoto() {
+		return pathPhoto;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+
+
+	public void setPathPhoto(String pathPhoto) {
+		this.pathPhoto = pathPhoto;
 	}
 
-	public String getImage() {
-		return image;
+
+
+	public CookTypeBean getCookTypeBean() {
+		return cookTypeBean;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+
+
+	public void setCookTypeBean(CookTypeBean cookTypeBean) {
+		this.cookTypeBean = cookTypeBean;
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "ReceipeBean [id=" + id + ", name=" + name + ", details="
-				+ details + ", resume=" + resume + ", nbPersons=" + nbPersons
-				+ ", complexity=" + complexity + ", type=" + type + ", image="
-				+ image + "]";
+		return "ReceipeBean [id=" + id + ", duration=" + duration + ", difficulty=" + difficulty + ", nbPeople="
+				+ nbPeople + ", title=" + title + ", description=" + description + ", pathPhoto=" + pathPhoto
+				+ ", cookTypeBean=" + cookTypeBean + "]";
 	}
 
+
+
+
+	
+	
 }

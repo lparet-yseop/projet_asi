@@ -1,6 +1,6 @@
 package dao.impl;
 
-import bean.UserBean;
+import beans.UserBean;
 import dao.generic.AbstractDAO;
 
 /**

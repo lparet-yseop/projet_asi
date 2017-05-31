@@ -27,42 +27,42 @@ public class NoteDao extends Dao {
 		return noteDao;
 	}
 
-	public ReceipeBean getReceipe(int id) {
-		ReceipeBean receipe = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection conn;
-			conn = DriverManager.getConnection(url, user, passwd);
-
-			PreparedStatement querySt = conn
-					.prepareStatement(Request.SELECT_USER.getQuery());
-			querySt.setInt(1, id);
-
-			ResultSet rs = querySt.executeQuery();
-			// Only one result
-			if (rs.next()) {
-				receipe = new ReceipeBean();
-				receipe.setId(rs.getInt("id"));
-				receipe.setDetails(rs.getString("details"));
-				receipe.setName(rs.getString("name"));
-				receipe.setComplexity(rs.getInt("complexity"));
-				receipe.setNbPersons(rs.getInt("nbPersons"));
-				receipe.setResume(rs.getString("resume"));
-				receipe.setType(rs.getString("type"));
-			}
-
-			rs.close();
-			querySt.close();
-			conn.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return receipe;
-	}
+//	public ReceipeBean getReceipe(int id) {
+//		ReceipeBean receipe = null;
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//
+//			Connection conn;
+//			conn = DriverManager.getConnection(url, user, passwd);
+//
+//			PreparedStatement querySt = conn
+//					.prepareStatement(Request.SELECT_USER.getQuery());
+//			querySt.setInt(1, id);
+//
+//			ResultSet rs = querySt.executeQuery();
+//			// Only one result
+//			if (rs.next()) {
+//				receipe = new ReceipeBean();
+//				receipe.setId(rs.getInt("id"));
+//				receipe.setDetails(rs.getString("details"));
+//				receipe.setName(rs.getString("name"));
+//				receipe.setComplexity(rs.getInt("complexity"));
+//				receipe.setNbPersons(rs.getInt("nbPersons"));
+//				receipe.setResume(rs.getString("resume"));
+//				receipe.setType(rs.getString("type"));
+//			}
+//
+//			rs.close();
+//			querySt.close();
+//			conn.close();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		return receipe;
+//	}
 
 	public boolean add(int idReceipe, int idUser, String note, String title) {
 		boolean result = false;

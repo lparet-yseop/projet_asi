@@ -1,4 +1,4 @@
-package bean;
+package beans;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,7 +14,7 @@ import dao.annotation.DBTable;
  * 
  * @author Louis Paret, Lucas Grégoire
  */
-@ManagedBean
+@ManagedBean( name = "userBean" )
 @SessionScoped
 @DBTable( "T_E_USER_USR" )
 public class UserBean implements Serializable {

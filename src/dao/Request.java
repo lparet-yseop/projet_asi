@@ -18,16 +18,19 @@ public enum Request {
 	
 	
 	// RECEIPT
-	SELECT_ALL_RECEIPT("SELECT `id`, `name`, `resume`, `details`, `nbPersons`, `complexity`, `type`, `image` FROM binome36.RECEIPE"),
+	SELECT_WITHOUT_CRITERIA("SELECT `REC_ID`, `REC_DURATION`, `REC_DIFFICULTY`, `REC_NB_PEOPLE`, `REC_TITLE`, `REC_DESCRIPTION`, `REC_PATH_PHOTO`, COT.COT_ID,COT.COT_TEXT FROM T_E_RECIPE_REC AS REC"),
 	
-	SELECT_RECEIPT("SELECT `id`, `name`, `resume`, `details`, `nbPersons`, `complexity`, `type`, image FROM binome36.RECEIPE where id=?"),
+	INNER_JOIN_COOK_TYPE("INNER JOIN T_E_COOK_TYPE_COT AS COT ON COT.COT_ID=REC.COT_ID "),
+	
+	SELECT_RECEIPT("SELECT `REC_ID`, `REC_DURATION`, `REC_DIFFICULTY`, `REC_NB_PEOPLE`, `REC_TITLE`, `REC_DESCRIPTION`, `REC_PATH_PHOTO`, `COT_ID` FROM T_E_RECIPE_REC where REC_ID=?"),
 
-	INSERT_RECEIPE("INSERT INTO binome36.RECEIPE(`id`, `name`, `resume`, `details`, `nbPersons`, `complexity`, `type`, image)"
+	
+	INSERT_RECEIPE("INSERT INTO binome36.RECEIPE(`REC_ID`, `REC_DURATION`, `REC_DIFFICULTY`, `REC_NB_PEOPLE`, `REC_TITLE`, `REC_DESCRIPTION`, `REC_PATH_PHOTO`, `COT_ID`)"
 			+ " VALUES"
 			+ " (null,?,?,?,?,?,?,?)"),
 	
 	UPDATE_RECEIPE("UPDATE binome36.RECEIPE"
-			+ " SET `name`=?,`resume`=?,`details`=?,`nbPersons`=?,`complexity`=?,`type`=?, `image`=?"
+			+ " SET `name`=?,`REC_DESCRIPTION`=?,`REC_TITLE`=?,`nbPersons`=?,`complexity`=?,`type`=?, `image`=?"
 			+ " WHERE id=?"),
 			
 	INSERT_NOTE("INSERT INTO binome36.NOTE (id, idReceipe, title, note, idUser)"
@@ -42,8 +45,16 @@ public enum Request {
 			+ "where idReceipe = ?;"),
 	
 	SELECT_ALL_NOTES_FOR_USER("SELECT id, idReceipe, title, note, idUser FROM binome36.NOTE "
-			+ "where idUser = ?;");
+			+ "where idUser = ?;"),
 
+	
+	
+	//COOK_TYPE
+	
+	SELECT_COOK_TYPE("SELECT COT_ID, COT_TEXT  FROM T_E_COOK_TYPE_COT AS COT ;");
+	
+	
+	
 	private String query;
 
 	private Request(String query) {

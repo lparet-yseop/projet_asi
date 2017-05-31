@@ -1,13 +1,13 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import beans.UserBean;
@@ -45,8 +45,8 @@ public class UserDao extends Dao {
 			querySt.setString(2, password);
 			querySt.setString(3, firstName);
 			querySt.setString(4, lastName);
+			querySt.setDate(5, new java.sql.Date(datebirthday.getTime()));
 			querySt.setString(6, email);
-			querySt.setDate(5, datebirthday);
 
 			// Exécution
 			int rs = querySt.executeUpdate();
