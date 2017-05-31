@@ -1,4 +1,4 @@
-package beans;
+package beans.form;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,6 +8,8 @@ import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import beans.UserBean;
 
 /**
  * User bean for register form

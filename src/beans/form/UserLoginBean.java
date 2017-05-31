@@ -1,9 +1,11 @@
-package beans;
+package beans.form;
 
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+
+import beans.UserBean;
 
 /**
  * User bean for login form
