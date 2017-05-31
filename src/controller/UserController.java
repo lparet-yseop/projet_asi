@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import beans.UserBean;
+import beans.UserCounter;
 import beans.UserLoginBean;
 import beans.UserRegisterBean;
 import beans.Util;
@@ -28,6 +29,7 @@ public class UserController implements Serializable {
 
     /** Serializable id */
     private static final long serialVersionUID = -4707280395188249270L;
+    private UserCounter userCounter = new UserCounter();
 
     /**
      * Create a notification message
@@ -64,10 +66,12 @@ public class UserController implements Serializable {
     public void login( UserLoginBean loginBean ) {
         UserDAO userDao = UserDAO.getInstance();
         UserBean bean = userDao.getUserAdminByLogin(loginBean.getUserBean());
-        
+
         if (bean != null) {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             session.setAttribute("userBean", bean);
+            userCounter.addUserConnected();
+
             redirectTo("activities");
         }
         else {
@@ -98,5 +102,6 @@ public class UserController implements Serializable {
      */
     public void logout() {
         Util.getSession().invalidate();
+        userCounter.deleteUserConnected();
     }
 }

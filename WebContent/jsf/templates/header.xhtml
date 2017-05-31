@@ -30,6 +30,9 @@
 	                </h:form>
 				</c:if>
 				<c:if test="#{not empty userBean.login}">
+					<span class="navbar-text mr-sm-1">
+						User connected : <h:outputText value="#{userCounterController.getUsersConnected()} "/>
+					</span>
 					<h:form class="form-inline justify-content-md-center justify-content-end">
 		                <h:commandButton type="submit" class="btn btn-outline-secondary my-sm-0" style="border-color: white; color: white;" value="Logout" action="#{userController.logout}" />
             		</h:form>
