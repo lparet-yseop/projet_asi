@@ -6,111 +6,160 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import dao.annotation.DBColumn;
+import dao.annotation.DBTable;
+
+/**
+ * User bean
+ * 
+ * @author Louis Paret, Lucas Grégoire
+ */
 @ManagedBean( name = "userBean" )
 @SessionScoped
+@DBTable( "T_E_USER_USR" )
 public class UserBean implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	private int id;
-	private String login;
-	private String password;
-	private String firstname;
-	private String lastname;
-	private Date datebirthday;
-	private String email;
-	private Boolean admin;
 
-	public UserBean() {
-	}
+    /** Serializable id */
+    private static final long serialVersionUID = -2920686139621697269L;
 
-	public UserBean(String login, String password, String firstname, String lastname, Date datebirthday, String email) {
-		super();
-		this.login = login;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.datebirthday = datebirthday;
-		this.email = email;
-	}
+    @DBColumn( value = "usr_id", primaryKey = true )
+    private int id;
+    @DBColumn( "usr_login" )
+    private String login;
+    @DBColumn( "usr_password" )
+    private String password;
+    @DBColumn( "usr_firstname" )
+    private String firstname;
+    @DBColumn( "usr_lastname" )
+    private String lastname;
+    @DBColumn( "usr_date_birth" )
+    private Date datebirthday;
+    @DBColumn( "usr_email" )
+    private String email;
+    @DBColumn( "usr_admin" )
+    private Boolean admin;
 
-	public UserBean(int id, String login, String password, String firstname, String lastname, Date datebirthday, String email,
-			Boolean admin) {
-		super();
-		this.id = id;
-		this.login = login;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.datebirthday = datebirthday;
-		this.email = email;
-		this.admin = admin;
-	}
+    /**
+     * Constructs a new UserBean
+     */
+    public UserBean() {
+    }
 
-	public int getId() {
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    /**
+     * @param id the id to set
+     */
+    public void setId( int id ) {
+        this.id = id;
+    }
 
-	public String getLogin() {
-		return login;
-	}
+    /**
+     * @return the login
+     */
+    public String getLogin() {
+        return login;
+    }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    /**
+     * @param login the login to set
+     */
+    public void setLogin( String login ) {
+        this.login = login;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * @param password the password to set
+     */
+    public void setPassword( String password ) {
+        this.password = password;
+    }
 
-	public String getFirstname() {
-		return firstname;
-	}
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+        return firstname;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    /**
+     * @param firstname the firstname to set
+     */
+    public void setFirstname( String firstname ) {
+        this.firstname = firstname;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    /**
+     * @return the lastname
+     */
+    public String getLastname() {
+        return lastname;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    /**
+     * @param lastname the lastname to set
+     */
+    public void setLastname( String lastname ) {
+        this.lastname = lastname;
+    }
 
-	public Date getDatebirthday() {
-		return datebirthday;
-	}
+    /**
+     * @return the datebirthday
+     */
+    public Date getDatebirthday() {
+        return datebirthday;
+    }
 
-	public void setDatebirthday(Date datebirthday) {
-		this.datebirthday = datebirthday;
-	}
+    /**
+     * @param datebirthday the datebirthday to set
+     */
+    public void setDatebirthday( Date datebirthday ) {
+        this.datebirthday = datebirthday;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    /**
+     * @param email the email to set
+     */
+    public void setEmail( String email ) {
+        this.email = email;
+    }
 
-	public Boolean getAdmin() {
-		return admin;
-	}
+    /**
+     * @return the admin
+     */
+    public Boolean getAdmin() {
+        return admin;
+    }
 
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
-	}
+    /**
+     * @param admin the admin to set
+     */
+    public void setAdmin( Boolean admin ) {
+        this.admin = admin;
+    }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -118,6 +167,5 @@ public class UserBean implements Serializable {
         return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname
                 + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin + "]";
     }
-	
-	
+
 }

@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 @RequestScoped
 public class UserRegisterBean implements Serializable {
 
-    /** Serializable */
+    /** Serializable id */
     private static final long serialVersionUID = -460913437505442449L;
 
     @Size( min = 2, max = 50, message = "Min 2 and max 50 characters" )
@@ -161,6 +161,16 @@ public class UserRegisterBean implements Serializable {
         bean.setPassword(password);
 
         return bean;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "UserRegisterBean [getUserBean()=" + getUserBean() + "]";
     }
 
 }
