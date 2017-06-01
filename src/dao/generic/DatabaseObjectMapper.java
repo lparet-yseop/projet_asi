@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import beans.utils.DatabaseBean;
-import dao.annotation.DBAnnotationsManager2;
+import dao.annotation.DBAnnotationsManager;
 import dao.annotation.DBJoin;
 
 /**
@@ -59,13 +59,13 @@ public class DatabaseObjectMapper<T extends DatabaseBean> {
         T generatedBean = (T) destinationClass.newInstance();
 
         // Map fields
-        for (Entry<Field, String> field : DBAnnotationsManager2.getAllKeysMap(destinationClass).entrySet()) {
+        for (Entry<Field, String> field : DBAnnotationsManager.getAllKeysMap(destinationClass).entrySet()) {
             field.getKey().setAccessible(true);
             field.getKey().set(generatedBean, resultSet.getObject(field.getValue()));
         }
 
         // Map sub-beans
-        for (Entry<Field, DBJoin> subField : DBAnnotationsManager2.getDBJoins(destinationClass).entrySet()) {
+        for (Entry<Field, DBJoin> subField : DBAnnotationsManager.getDBJoins(destinationClass).entrySet()) {
             subField.getKey().setAccessible(true);
             subField.getKey().set(generatedBean, mapDirectRecursive(resultSet, subField.getValue().joinClass()));
         }
