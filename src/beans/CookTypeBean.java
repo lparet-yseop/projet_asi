@@ -15,7 +15,7 @@ import dao.annotation.DBTable;
  */
 @ManagedBean( name = "cookTypeBean" )
 @SessionScoped
-@DBTable( "T_E_USER_USR" )
+@DBTable( "T_E_COOK_TYPE_COT" )
 public class CookTypeBean implements Serializable {
 
     /** Serializable id */

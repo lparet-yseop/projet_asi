@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import beans.UserBean;
 import dao.annotation.DbAnnotationsManager;
 import dao.utils.DBAccess;
 import dao.utils.UnknownTableNameException;
@@ -36,7 +35,7 @@ public class TableManager<T> {
      * @param parameters The list of parameters
      * @return The bean returned or null
      */
-    public T executeSelect( Class<UserBean> instanceClass, String request, List<Object> parameters ) {
+    public T executeSelect( Class<T> instanceClass, String request, List<Object> parameters ) {
         try {
             // Preparing statement
             PreparedStatement stmt = DBAccess.getConnection().prepareStatement(request);
@@ -64,15 +63,15 @@ public class TableManager<T> {
         try {
             return execSelect(entity);
         }
-        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | UnknownTableNameException | SQLException
-                | IndexOutOfBoundsException e) {
+        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | UnknownTableNameException | SQLException | IndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private T execSelect( T entity ) throws UnknownTableNameException, SQLException, IllegalArgumentException, IllegalAccessException,
-            InstantiationException, IndexOutOfBoundsException {
+    @SuppressWarnings( "unchecked" )
+    private T execSelect( T entity )
+            throws UnknownTableNameException, SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
         String tableName = DbAnnotationsManager.getTableName(entity.getClass());
 
         Map<Field, String> pkeys = DbAnnotationsManager.getPrimaryKeysMap(entity.getClass());
@@ -98,7 +97,7 @@ public class TableManager<T> {
 
         ResultSet rs = stmt.executeQuery();
 
-        return fromResultSet(entity.getClass(), rs).get(0);
+        return fromResultSet((Class<T>) entity.getClass(), rs).get(0);
     }
 
     /**
@@ -112,15 +111,14 @@ public class TableManager<T> {
         try {
             return execSelectById(id, instanceClass);
         }
-        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | UnknownTableNameException | SQLException
-                | IndexOutOfBoundsException e) {
+        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | UnknownTableNameException | SQLException | IndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private T execSelectById( Integer id, Class<T> instanceClass ) throws UnknownTableNameException, SQLException, IllegalArgumentException,
-            IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
+    private T execSelectById( Integer id, Class<T> instanceClass )
+            throws UnknownTableNameException, SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
         String tableName = DbAnnotationsManager.getTableName(instanceClass);
 
         Map<Field, String> pkeys = DbAnnotationsManager.getPrimaryKeysMap(instanceClass);
@@ -349,9 +347,7 @@ public class TableManager<T> {
         return stmt.executeUpdate() > 0;
     }
 
-    @SuppressWarnings( "unchecked" )
-    private List<T> fromResultSet( Class<?> entityClass, ResultSet resultSet )
-            throws InstantiationException, IllegalAccessException, IllegalArgumentException, SQLException {
+    private List<T> fromResultSet( Class<T> entityClass, ResultSet resultSet ) throws InstantiationException, IllegalAccessException, IllegalArgumentException, SQLException {
         List<T> results = new ArrayList<T>();
         T currentInstance;
 
@@ -363,8 +359,8 @@ public class TableManager<T> {
                     field.getKey().setAccessible(true);
                     field.getKey().set(currentInstance, resultSet.getObject(field.getValue()));
                 }
-
                 results.add(currentInstance);
+
             } while (resultSet.next());
         }
         else {
