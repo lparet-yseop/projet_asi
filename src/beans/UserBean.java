@@ -35,10 +35,12 @@ public class UserBean implements Serializable {
     @DBColumn( "usr_date_birth" )
     private Date datebirthday;
     @DBColumn( "usr_email" )
-    private String email;
+	private String email;
     @DBColumn( "usr_admin" )
     private Boolean admin;
-
+    @DBColumn("usr_path_photo")
+    private String pathPhoto;
+    
     /**
      * Constructs a new UserBean
      */
@@ -157,15 +159,25 @@ public class UserBean implements Serializable {
         this.admin = admin;
     }
 
-    /*
-     * (non-Javadoc)
+    
+    
+    /**
      * 
-     * @see java.lang.Object#toString()
+     * @return pathphto
      */
-    @Override
-    public String toString() {
-        return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname
-                + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin + "]";
-    }
+    public String getPathPhoto() {
+		return pathPhoto;
+	}
+
+	public void setPathPhoto(String pathPhoto) {
+		this.pathPhoto = pathPhoto;
+	}
+
+	@Override
+	public String toString() {
+		return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin
+				+ ", pathPhoto=" + pathPhoto + "]";
+	}
 
 }

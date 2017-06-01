@@ -47,7 +47,17 @@ public enum Request {
 	SELECT_ALL_NOTES_FOR_USER("SELECT id, idReceipe, title, note, idUser FROM binome36.NOTE "
 			+ "where idUser = ?;"),
 
+	//COMMENT 
 	
+	INSERT_COMMENT("INSERT INTO T_E_COMMENT_COM(`COM_ID`, `COM_TEXT`, `COM_DATE`, `COM_MARK`, `REC_ID`, `USR_ID`)"
+			+ " VALUES"
+			+ " (null,?,?,?,?,?)"),
+	
+	SELECT_COMMENT_FOR_RECEIPE("SELECT * FROM T_E_COMMENT_COM AS COM"),
+	
+	JOIN_COMMENT_USER(" INNER JOIN T_E_USER_USR AS USR ON USR.USR_ID = COM.USR_ID "),
+			
+	WHERE_RECEIPE("where REC_ID = ? ; "),
 	
 	//COOK_TYPE
 	

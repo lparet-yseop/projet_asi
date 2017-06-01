@@ -9,8 +9,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import beans.CommentBean;
 import beans.CookTypeBean;
 import beans.ReceipeBean;
+import dao.CommentDao;
 import dao.ReceipeDao;
 
 @ManagedBean
@@ -43,7 +45,7 @@ public class ReceipeController {
 	public int nbPeople;
 	public List<ReceipeBean> receipes  = new ArrayList<ReceipeBean>();
 	public ReceipeBean selectedReceipe; 
-	
+	public List<CommentBean> commentBeans;
 
 
 	public ReceipeController() {
@@ -64,15 +66,7 @@ public class ReceipeController {
 	
 	public String goToDetail(ReceipeBean receipeBean){
 		this.selectedReceipe = receipeBean;
-		System.out.println("toto");
-		return "detailReceip";
-	}
-	
-	
-	
-	public String goToDetail(){
-		this.selectedReceipe = this.receipes.get(0);
-		System.out.println("toto");
+		commentBeans = getCommentByReceipe();
 		return "detailReceip";
 	}
 
@@ -84,6 +78,11 @@ public class ReceipeController {
 		return receipe;
 	}
 
+	
+	public List<CommentBean> getCommentByReceipe(){
+		CommentDao commentDao = CommentDao.getInstance();
+		return commentDao.findByReceipe(this.selectedReceipe);
+	}
 
 	public String getReceipesByCriteria(){
 		ReceipeDao receipeDao = ReceipeDao.getInstance();
@@ -140,6 +139,20 @@ public class ReceipeController {
 	public void setSelectedReceipe(ReceipeBean selectedReceipe) {
 		this.selectedReceipe = selectedReceipe;
 	}
+
+
+
+	public List<CommentBean> getCommentBeans() {
+		return commentBeans;
+	}
+
+
+
+	public void setCommentBeans(List<CommentBean> commentBeans) {
+		this.commentBeans = commentBeans;
+	}
+	
+	
 	
 	
 	
