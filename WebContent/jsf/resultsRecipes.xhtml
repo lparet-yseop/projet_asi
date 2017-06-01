@@ -7,38 +7,46 @@
 
 
 		<h:form id="form">
-			<p:dataGrid var="receipe" value="#{receipeController.receipes}"  columns="3" layout="grid" rows="12" paginator="true" id="receipes"
+			<p:dataGrid var="receipe" value="#{receipeController.receipes}" columns="3" layout="grid" rows="12" paginator="true" id="receipes"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="6,12,16">
 
 				<f:facet name="header">
 		            Receipes Available
 		        </f:facet>
 
-					<p:panelGrid columns="2" columnClasses="label,value" actionListener="#{receipeController.goToDetail()}">
-						<f:facet name="header">
-						#{receipe.title}
-							<p:graphicImage library="images" value="#{receipe.pathPhoto}" />
-						</f:facet>
 
+				<p:panelGrid columns="2" columnClasses="label,value" actionListener="#{receipeController.goToDetail()}">
+					<f:facet name="header">
+							#{receipe.title}
+								<p:graphicImage value="../resources/images/#{receipe.pathPhoto}" style="width: 150px" />
+					</f:facet>
 
-
+					<p:column>
 						<h:outputText value="Difficulty:" />
+					</p:column>
+					<p:column>
 						<h:outputText value="#{receipe.difficulty}" style="font-weight: bold" />
-
+					</p:column>
+					<p:column>
 						<h:outputText value="Number of eatters:" />
+					</p:column>
+					<p:column>
 						<h:outputText value="#{receipe.nbPeople}" style="font-weight: bold" />
-
+					</p:column>
+					<p:column>
 						<h:outputText value="Type:" />
+					</p:column>
+					<p:column>
 						<h:outputText value="#{receipe.cookTypeBean.text}" style="font-weight: bold" />
-
-						<p:commandButton  action="#{receipeController.goToDetail()}" icon="ui-icon ui-icon-search" />
+					</p:column>
+					<p:column>
+						<h:outputText value="Details:" />
+					</p:column>
+					<p:column>
+						<p:commandButton action="#{receipeController.goToDetail(receipe)}"  icon="ui-icon ui-icon-search" />
+					</p:column>
 				</p:panelGrid>
-
 			</p:dataGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>
-
-
-
-

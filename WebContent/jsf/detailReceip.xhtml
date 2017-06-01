@@ -8,14 +8,13 @@
 
 		<h:form id="form">
 
-			<f:facet name="header">
-            		#{receipeController.selectedReceipe.title}			
-        	</f:facet>
-
+			<p:graphicImage value="../resources/images/#{receipeController.selectedReceipe.pathPhoto}" style="width: 350px" />
 			<p:panelGrid columns="2" columnClasses="label,value">
 
 				<h:outputText value="Title:" />
 				<h:outputText value="#{receipeController.selectedReceipe.title}" style="font-weight: bold" />
+
+
 
 				<h:outputText value="Description:" />
 				<h:outputText value="#{receipeController.selectedReceipe.description}" style="font-weight: bold" />
@@ -29,13 +28,8 @@
 				<h:outputText value="Type:" />
 				<h:outputText value="#{receipeController.selectedReceipe.cookTypeBean.text}" style="font-weight: bold" />
 
-
 			</p:panelGrid>
-
 		</h:form>
-
-
-
 	</ui:define>
 </ui:composition>
 

@@ -5,14 +5,16 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import beans.CookTypeBean;
 import beans.ReceipeBean;
 import dao.ReceipeDao;
 
 @ManagedBean
-//@ViewScoped
+@SessionScoped
 public class ReceipeController {
 
 //	public boolean addReceipt(ReceipeBean receipe) {
@@ -39,14 +41,14 @@ public class ReceipeController {
 	public int cookType;
 	public int duration;
 	public int nbPeople;
-	public List<ReceipeBean> receipes;
+	public List<ReceipeBean> receipes  = new ArrayList<ReceipeBean>();
 	public ReceipeBean selectedReceipe; 
 	
 
 
 	public ReceipeController() {
 		super();
-		receipes = new ArrayList<ReceipeBean>();
+		//receipes = new ArrayList<ReceipeBean>();
 	}
 	
 
@@ -62,9 +64,18 @@ public class ReceipeController {
 	
 	public String goToDetail(ReceipeBean receipeBean){
 		this.selectedReceipe = receipeBean;
+		System.out.println("toto");
 		return "detailReceip";
 	}
 	
+	
+	
+	public String goToDetail(){
+		this.selectedReceipe = this.receipes.get(0);
+		System.out.println("toto");
+		return "detailReceip";
+	}
+
 	public ReceipeBean getReceipe(int receipeId) {
 		ReceipeDao receipeDao = ReceipeDao.getInstance();
 
@@ -85,6 +96,7 @@ public class ReceipeController {
 		if(nbPeople > 0 ) receipeBean.setNbPeople(nbPeople);
 		List<ReceipeBean> list = receipeDao.findByCriteria(receipeBean);
 		receipes = list;
+		selectedReceipe = list.get(1);
 		//return list;
 		return "resultsRecipes";
 	}
