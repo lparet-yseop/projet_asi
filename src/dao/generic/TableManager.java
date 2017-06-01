@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import dao.annotation.DBAnnotationsManager;
+import dao.annotation.DBAnnotationsManager2;
 import dao.utils.DBAccess;
 
 /**
@@ -71,9 +71,9 @@ public class TableManager<T> {
     @SuppressWarnings( "unchecked" )
     private T execSelect( T entity )
             throws SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
-        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
+        String tableName = DBAnnotationsManager2.getTableName(entity.getClass());
 
-        Map<Field, String> pkeys = DBAnnotationsManager.getPrimaryKeysMap(entity.getClass());
+        Map<Field, String> pkeys = DBAnnotationsManager2.getPrimaryKeysMap(entity.getClass());
         StringBuilder whereClause = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
         boolean first = true;
 
@@ -118,9 +118,9 @@ public class TableManager<T> {
 
     private T execSelectById( Integer id, Class<T> instanceClass )
             throws SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
-        String tableName = DBAnnotationsManager.getTableName(instanceClass);
+        String tableName = DBAnnotationsManager2.getTableName(instanceClass);
 
-        Map<Field, String> pkeys = DBAnnotationsManager.getPrimaryKeysMap(instanceClass);
+        Map<Field, String> pkeys = DBAnnotationsManager2.getPrimaryKeysMap(instanceClass);
         StringBuilder whereClause = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
         boolean first = true;
 
@@ -164,7 +164,7 @@ public class TableManager<T> {
 
     private List<T> execSelectAll( Class<T> instanceClass )
             throws SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException {
-        String tableName = DBAnnotationsManager.getTableName(instanceClass);
+        String tableName = DBAnnotationsManager2.getTableName(instanceClass);
         StringBuilder clause = new StringBuilder("SELECT * FROM " + tableName);
 
         // Preparing statement
@@ -189,9 +189,9 @@ public class TableManager<T> {
     }
 
     private void execInsert( T entity ) throws IllegalArgumentException, IllegalAccessException, SQLException {
-        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
+        String tableName = DBAnnotationsManager2.getTableName(entity.getClass());
 
-        Map<Field, String> allKeys = DBAnnotationsManager.getAllKeysMap(entity.getClass());
+        Map<Field, String> allKeys = DBAnnotationsManager2.getAllKeysMap(entity.getClass());
         StringBuilder insertClause = new StringBuilder("INSERT INTO " + tableName + " (");
         StringBuilder valuesClause = new StringBuilder();
         boolean first = true;
@@ -244,10 +244,10 @@ public class TableManager<T> {
     }
 
     private void execUpdate( T entity ) throws IllegalArgumentException, IllegalAccessException, SQLException {
-        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
+        String tableName = DBAnnotationsManager2.getTableName(entity.getClass());
 
-        Map<Field, String> keys = DBAnnotationsManager.getPrimaryKeysMap(entity.getClass());
-        Map<Field, String> noKeys = DBAnnotationsManager.getNonPrimaryKeysMap(entity.getClass());
+        Map<Field, String> keys = DBAnnotationsManager2.getPrimaryKeysMap(entity.getClass());
+        Map<Field, String> noKeys = DBAnnotationsManager2.getNonPrimaryKeysMap(entity.getClass());
         StringBuilder updateClause = new StringBuilder("UPDATE " + tableName + " SET ");
         StringBuilder whereClause = new StringBuilder(" WHERE ");
         boolean first = true;
@@ -317,9 +317,9 @@ public class TableManager<T> {
     }
 
     private boolean execDelete( T entity ) throws IllegalArgumentException, IllegalAccessException, SQLException {
-        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
+        String tableName = DBAnnotationsManager2.getTableName(entity.getClass());
 
-        Map<Field, String> keys = DBAnnotationsManager.getPrimaryKeysMap(entity.getClass());
+        Map<Field, String> keys = DBAnnotationsManager2.getPrimaryKeysMap(entity.getClass());
         StringBuilder clause = new StringBuilder("DELETE FROM " + tableName + " WHERE ");
         boolean first = true;
 
@@ -355,7 +355,7 @@ public class TableManager<T> {
             do {
                 currentInstance = (T) entityClass.newInstance();
 
-                for (Entry<Field, String> field : DBAnnotationsManager.getAllKeysMap(entityClass).entrySet()) {
+                for (Entry<Field, String> field : DBAnnotationsManager2.getAllKeysMap(entityClass).entrySet()) {
                     field.getKey().setAccessible(true);
                     field.getKey().set(currentInstance, resultSet.getObject(field.getValue()));
                 }

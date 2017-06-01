@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Map.Entry;
 
 import beans.utils.DatabaseBean;
-import dao.annotation.DBAnnotationsManager;
+import dao.annotation.DBAnnotationsManager2;
 import dao.annotation.DBJoin;
 
 /**
@@ -25,7 +25,7 @@ public class RequestGenerator {
     public static String getSelectAll( Class<? extends DatabaseBean> entityClass ) {
         StringBuilder sb = new StringBuilder("SELECT * FROM ");
 
-        sb.append(DBAnnotationsManager.getTableName(entityClass));
+        sb.append(DBAnnotationsManager2.getTableName(entityClass));
         sb.append(getJoinClause(entityClass));
 
         return sb.toString();
@@ -46,18 +46,18 @@ public class RequestGenerator {
     private static String getJoinClause( Class<? extends DatabaseBean> entityClass ) {
         StringBuilder sb = new StringBuilder(ESP);
 
-        for (DBJoin join : DBAnnotationsManager.getDBJoins(entityClass).values()) {
+        for (DBJoin join : DBAnnotationsManager2.getDBJoins(entityClass).values()) {
             sb.append("JOIN");
             sb.append(ESP);
-            sb.append(DBAnnotationsManager.getTableName(join.joinClass()));
+            sb.append(DBAnnotationsManager2.getTableName(join.joinClass()));
             sb.append(ESP);
             sb.append("ON");
             sb.append(ESP);
-            sb.append(DBAnnotationsManager.getTableName(entityClass));
+            sb.append(DBAnnotationsManager2.getTableName(entityClass));
             sb.append(".");
             sb.append(join.srcColumn());
             sb.append(ESP + "=" + ESP);
-            sb.append(DBAnnotationsManager.getTableName(join.joinClass()));
+            sb.append(DBAnnotationsManager2.getTableName(join.joinClass()));
             sb.append(".");
             sb.append(join.destColumn());
             sb.append(ESP);
@@ -70,7 +70,7 @@ public class RequestGenerator {
         StringBuilder sb = new StringBuilder("WHERE" + ESP);
         boolean first = true;
 
-        for (Entry<Field, String> entry : DBAnnotationsManager.getPrimaryKeysMap(entityClass).entrySet()) {
+        for (Entry<Field, String> entry : DBAnnotationsManager2.getPrimaryKeysMap(entityClass).entrySet()) {
             if (!first)
                 sb.append("," + ESP);
             sb.append(entry.getValue() + ESP + "= ?");

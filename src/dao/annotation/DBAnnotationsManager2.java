@@ -12,7 +12,7 @@ import beans.utils.DatabaseBean;
  * 
  * @author Lucas Grégoire
  */
-public class DBAnnotationsManager {
+public class DBAnnotationsManager2 {
 
     /**
      * Gets the table name of a bean class

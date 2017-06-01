@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import beans.RecipeBean;
-import dao.annotation.DBAnnotationsManager;
+import dao.annotation.DBAnnotationsManager2;
 import dao.generic.AbstractDAO;
 
 /**
@@ -55,7 +55,7 @@ public class RecipeDAO extends AbstractDAO<RecipeBean> {
                 if (i > 0)
                     sb.append(" AND ");
 
-                sb.append(DBAnnotationsManager.getTableName(RecipeBean.class) + ".cot_id = ");
+                sb.append(DBAnnotationsManager2.getTableName(RecipeBean.class) + ".cot_id = ");
                 map.put(++i, bean.getCookTypeBean().getId());
             }
 
