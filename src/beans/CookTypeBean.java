@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 
+import beans.utils.DatabaseBean;
 import dao.annotation.DBColumn;
 import dao.annotation.DBTable;
 
@@ -14,7 +15,7 @@ import dao.annotation.DBTable;
  */
 @ManagedBean( name = "cookTypeBean" )
 @DBTable( "T_E_COOK_TYPE_COT" )
-public class CookTypeBean implements Serializable {
+public class CookTypeBean extends DatabaseBean implements Serializable {
 
     /** Serializable id */
     private static final long serialVersionUID = -5388685879696441316L;

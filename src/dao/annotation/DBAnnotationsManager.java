@@ -5,31 +5,30 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import dao.utils.UnknownTableNameException;
+import beans.utils.DatabaseBean;
 
 /**
  * Database beans annotations engine
  * 
  * @author Lucas Grégoire
  */
-public class DbAnnotationsManager {
+public class DBAnnotationsManager {
 
     /**
      * Gets the table name of a bean class
      * 
      * @param entityClass The entity bean class
      * @return The table name relative to the bean
-     * @throws UnknownTableNameException If the table name isn't set
      */
-    public static String getTableName( Class<?> entityClass ) throws UnknownTableNameException {
+    public static String getTableName( Class<?> entityClass ) {
         return getTableNameGeneric(entityClass, DBTable.class);
     }
 
-    private static String getTableNameGeneric( Class<?> entityClass, Class<? extends Annotation> annotationClass ) throws UnknownTableNameException {
+    private static String getTableNameGeneric( Class<?> entityClass, Class<? extends Annotation> annotationClass ) {
         if (entityClass.isAnnotationPresent(annotationClass)) {
             return ((DBTable) entityClass.getAnnotation(annotationClass)).value();
         }
-        throw new UnknownTableNameException();
+        return null;
     }
 
     /**
@@ -88,5 +87,23 @@ public class DbAnnotationsManager {
             }
         }
         return keys;
+    }
+
+    /**
+     * Gets the field class map of the subbeans
+     * 
+     * @param entityClass The class to parse te DBJoin
+     * @return The map of bean field, sub bean class
+     */
+    public static Map<Field, DBJoin> getDBJoins( Class<? extends DatabaseBean> entityClass ) {
+        Map<Field, DBJoin> map = new HashMap<Field, DBJoin>();
+
+        for (Field field : entityClass.getDeclaredFields()) {
+            if (field.isAnnotationPresent(DBJoin.class)) {
+                map.put(field, (DBJoin) field.getAnnotation(DBJoin.class));
+            }
+        }
+
+        return map;
     }
 }

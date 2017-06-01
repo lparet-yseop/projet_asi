@@ -4,17 +4,19 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 
+import beans.utils.DatabaseBean;
 import dao.annotation.DBColumn;
+import dao.annotation.DBJoin;
 import dao.annotation.DBTable;
 
 /**
  * Cook type bean
  * 
- * @author Louis Paret, Lucas Grégoire
+ * @author Hugo Blanc, Lucas Grégoire
  */
-@ManagedBean( name = "cookTypeBean" )
+@ManagedBean( name = "recipeBean" )
 @DBTable( "T_E_RECIPE_REC" )
-public class RecipeBean implements Serializable {
+public class RecipeBean extends DatabaseBean implements Serializable {
 
     /** Serializable id */
     private static final long serialVersionUID = -1002438860544059170L;
@@ -27,12 +29,13 @@ public class RecipeBean implements Serializable {
     private int difficulty;
     @DBColumn( "rec_nb_people" )
     private int nbPeople;
-    @DBColumn( "rec_difficulty" )
+    @DBColumn( "rec_title" )
     private String title;
     @DBColumn( "rec_description" )
     private String description;
     @DBColumn( "rec_path_photo" )
     private String pathPhoto;
+    @DBJoin( joinClass = CookTypeBean.class, srcColumn = "cot_id", destColumn = "cot_id" )
     private CookTypeBean cookTypeBean;
 
     /**
@@ -160,8 +163,8 @@ public class RecipeBean implements Serializable {
      */
     @Override
     public String toString() {
-        return "RecipeBean [id=" + id + ", duration=" + duration + ", difficulty=" + difficulty + ", nbPeople=" + nbPeople + ", title=" + title + ", description=" + description
-                + ", pathPhoto=" + pathPhoto + ", cookTypeBean=" + cookTypeBean + "]";
+        return "RecipeBean [id=" + id + ", duration=" + duration + ", difficulty=" + difficulty + ", nbPeople=" + nbPeople + ", title=" + title
+                + ", description=" + description + ", pathPhoto=" + pathPhoto + ", cookTypeBean=" + cookTypeBean + "]";
     }
 
 }
