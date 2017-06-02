@@ -71,11 +71,10 @@ public class UserController implements Serializable {
         if (bean != null) {
             SessionUtil.setUserBean(bean);
             userCounter.addUserConnected();
-
             redirectTo("activities");
         }
         else {
-            logout();
+        	SessionUtil.clearSession();
             addMessage(FacesMessage.SEVERITY_WARN, "Connexion échouée");
         }
     }
@@ -132,7 +131,11 @@ public class UserController implements Serializable {
     	userBean.setFirstname(userRegisterBean.getFirstname());
     	userBean.setLastname(userRegisterBean.getLastname());
     	userBean.setPassword(userRegisterBean.getPassword());
-    	userDao.save(userBean);
-    	addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur modifié");
+    	UserBean save = userDao.save(userBean);
+    	if (save != null) {
+    		addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur modifié");
+    	} else {
+    		addMessage(FacesMessage.SEVERITY_INFO, "Echec modification");
+    	}
     }    
 }

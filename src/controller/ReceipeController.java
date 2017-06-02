@@ -158,11 +158,4 @@ public class ReceipeController {
         FacesMessage message = new FacesMessage(severity, text, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
-    /**
-     * Delete User
-     */
-    public void setReceipeDao() {
-    	addMessage(FacesMessage.SEVERITY_ERROR, "Non implémenté");
-    }
 }
