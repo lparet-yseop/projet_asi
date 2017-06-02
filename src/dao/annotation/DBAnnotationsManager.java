@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.faces.bean.ApplicationScoped;
+
 import beans.utils.DatabaseBean;
 
 /**
@@ -12,6 +14,7 @@ import beans.utils.DatabaseBean;
  * 
  * @author Lucas Grégoire
  */
+@ApplicationScoped
 public class DBAnnotationsManager {
 
     /**
@@ -51,8 +54,7 @@ public class DBAnnotationsManager {
         return getKeysFromPrimaryKeyStatus(entityClass, DBColumn.class, false);
     }
 
-    private static Map<Field, String> getKeysFromPrimaryKeyStatus( Class<?> entityClass, Class<? extends Annotation> annotationClass,
-            boolean statusPrimaryKey ) {
+    private static Map<Field, String> getKeysFromPrimaryKeyStatus( Class<?> entityClass, Class<? extends Annotation> annotationClass, boolean statusPrimaryKey ) {
         Map<Field, String> keys = new HashMap<Field, String>();
 
         for (Field field : entityClass.getDeclaredFields()) {
