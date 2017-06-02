@@ -86,14 +86,9 @@ public class UserController implements Serializable {
      */
     public void register( UserRegisterBean registerBean ) {
         UserDAO userDao = UserDAO.getInstance();
-
-        if (userDao.insert(registerBean.getUserBean()) != null) {
-            addMessage(FacesMessage.SEVERITY_INFO, "Inscription réalisée");
-            redirectTo("login");
-        }
-        else {
-            addMessage(FacesMessage.SEVERITY_WARN, "Echec de l'inscription");
-        }
+        userDao.insert(registerBean.getUserBean());
+        addMessage(FacesMessage.SEVERITY_INFO, "Inscription réalisée");
+        redirectTo("login");      
     }
 
     /**
