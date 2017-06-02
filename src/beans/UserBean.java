@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import beans.form.UserRegisterBean;
 import dao.annotation.DBColumn;
 import dao.annotation.DBTable;
 
@@ -166,6 +167,22 @@ public class UserBean implements Serializable {
     public String toString() {
         return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname
                 + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin + "]";
+    }
+    
+    /**
+     * @return The UserRegisterBean relative to this UserBean
+     */
+    public UserRegisterBean getUserBean() {
+        UserRegisterBean userRegister = new UserRegisterBean();
+
+        userRegister.setFirstname(firstname);
+        userRegister.setLastname(lastname);
+        userRegister.setBirthdate(datebirthday);
+        userRegister.setEmail(email);
+        userRegister.setLogin(login);
+        userRegister.setPassword(password);
+
+        return userRegister;
     }
 
 }

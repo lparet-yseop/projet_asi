@@ -3,11 +3,11 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
+import javax.faces.context.FacesContext;
 
 import beans.CookTypeBean;
 import beans.ReceipeBean;
@@ -141,29 +141,28 @@ public class ReceipeController {
 		this.selectedReceipe = selectedReceipe;
 	}
 	
-	
-	
-	
-	
-//	public static void main(String[] args) {
-//
-//		ReceipeControler rc = new ReceipeControler();
-//		System.out.println(rc.getAllReceipes());
-//
-//		ReceipeBean bean = new ReceipeBean("Crepes",
-//				"Farine + oeuf + lait + biere", "Delicieuse crepes", 4, 1,
-//				"Dessert", "crepes.png");
-//		boolean addReceipt = rc.addReceipt(bean);
-//		System.out.println("Add receipe: " + addReceipt);
-//
-//		bean.setNbPersons(1);
-//		bean.setId(1);
-//		boolean editUser = rc.editReceipe(bean);
-//		System.out.println("User edit: " + editUser);
-//
-//		bean = rc.getReceipe(1);
-//		System.out.println("User edited:" + bean);
-//		System.out.println(rc.getAllReceipes());
-//
-//	}
+	/**
+     * Delete User
+     */
+    public void deleteReceipe(ReceipeBean receipeBean) {
+    	addMessage(FacesMessage.SEVERITY_INFO, "Non implémenté");
+    }
+    
+    /**
+     * Create a notification message
+     * 
+     * @param severity The severity of the message
+     * @param text The text
+     */
+    public void addMessage( Severity severity, String text ) {
+        FacesMessage message = new FacesMessage(severity, text, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    /**
+     * Delete User
+     */
+    public void setReceipeDao() {
+    	addMessage(FacesMessage.SEVERITY_ERROR, "Non implémenté");
+    }
 }

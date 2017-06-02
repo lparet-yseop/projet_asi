@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -103,4 +104,35 @@ public class UserController implements Serializable {
         SessionUtil.clearSession();
         userCounter.deleteUserConnected();
     }
+    
+    /**
+     * Get All Users
+     */
+    public List<UserBean> getAllUsers() {
+    	UserDAO userDao = UserDAO.getInstance();
+    	return userDao.findAll();
+    }
+    
+    /**
+     * Delete User
+     */
+    public void deleteUser(UserBean userBean) {
+    	UserDAO userDao = UserDAO.getInstance();
+    	userDao.delete(userBean);
+    	addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur supprimé");
+    }
+    
+    /**
+     * Delete User
+     */
+    public void setUser(UserRegisterBean userRegisterBean) {
+    	UserDAO userDao = UserDAO.getInstance();
+    	UserBean userBean = userDao.getByMail(userRegisterBean.getUserBean());
+    	userBean.setLogin(userRegisterBean.getLogin());
+    	userBean.setFirstname(userRegisterBean.getFirstname());
+    	userBean.setLastname(userRegisterBean.getLastname());
+    	userBean.setPassword(userRegisterBean.getPassword());
+    	userDao.save(userBean);
+    	addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur modifié");
+    }    
 }

@@ -49,5 +49,17 @@ public class UserDAO extends AbstractDAO<UserBean> {
             return null;
         }
     }
+    
+    public UserBean getByMail( UserBean userBean ) {
+        try {
+            StringBuilder request = new StringBuilder("SELECT * FROM " + DbAnnotationsManager.getTableName(userBean.getClass()));
+            request.append(" WHERE usr_email = ?");
+            return manager.executeSelect(UserBean.class, request.toString(), Arrays.asList(userBean.getEmail()));
+        }
+        catch (UnknownTableNameException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
