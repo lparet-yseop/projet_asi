@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import dao.annotation.DbAnnotationsManager;
+import dao.annotation.DBAnnotationsManager;
 import dao.utils.DBAccess;
-import dao.utils.UnknownTableNameException;
 
 /**
  * Database abstract manager
@@ -63,7 +62,7 @@ public class TableManager<T> {
         try {
             return execSelect(entity);
         }
-        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | UnknownTableNameException | SQLException | IndexOutOfBoundsException e) {
+        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | SQLException | IndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
         }
@@ -71,10 +70,10 @@ public class TableManager<T> {
 
     @SuppressWarnings( "unchecked" )
     private T execSelect( T entity )
-            throws UnknownTableNameException, SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
-        String tableName = DbAnnotationsManager.getTableName(entity.getClass());
+            throws SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
+        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
 
-        Map<Field, String> pkeys = DbAnnotationsManager.getPrimaryKeysMap(entity.getClass());
+        Map<Field, String> pkeys = DBAnnotationsManager.getPrimaryKeysMap(entity.getClass());
         StringBuilder whereClause = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
         boolean first = true;
 
@@ -111,17 +110,17 @@ public class TableManager<T> {
         try {
             return execSelectById(id, instanceClass);
         }
-        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | UnknownTableNameException | SQLException | IndexOutOfBoundsException e) {
+        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | SQLException | IndexOutOfBoundsException e) {
             e.printStackTrace();
             return null;
         }
     }
 
     private T execSelectById( Integer id, Class<T> instanceClass )
-            throws UnknownTableNameException, SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
-        String tableName = DbAnnotationsManager.getTableName(instanceClass);
+            throws SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, IndexOutOfBoundsException {
+        String tableName = DBAnnotationsManager.getTableName(instanceClass);
 
-        Map<Field, String> pkeys = DbAnnotationsManager.getPrimaryKeysMap(instanceClass);
+        Map<Field, String> pkeys = DBAnnotationsManager.getPrimaryKeysMap(instanceClass);
         StringBuilder whereClause = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
         boolean first = true;
 
@@ -157,15 +156,15 @@ public class TableManager<T> {
         try {
             return execSelectAll(instanceClass);
         }
-        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | UnknownTableNameException | SQLException e) {
+        catch (IllegalArgumentException | IllegalAccessException | InstantiationException | SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
     private List<T> execSelectAll( Class<T> instanceClass )
-            throws UnknownTableNameException, SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException {
-        String tableName = DbAnnotationsManager.getTableName(instanceClass);
+            throws SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException {
+        String tableName = DBAnnotationsManager.getTableName(instanceClass);
         StringBuilder clause = new StringBuilder("SELECT * FROM " + tableName);
 
         // Preparing statement
@@ -184,15 +183,15 @@ public class TableManager<T> {
         try {
             execInsert(entity);
         }
-        catch (IllegalArgumentException | IllegalAccessException | UnknownTableNameException | SQLException e) {
+        catch (IllegalArgumentException | IllegalAccessException | SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void execInsert( T entity ) throws IllegalArgumentException, IllegalAccessException, UnknownTableNameException, SQLException {
-        String tableName = DbAnnotationsManager.getTableName(entity.getClass());
+    private void execInsert( T entity ) throws IllegalArgumentException, IllegalAccessException, SQLException {
+        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
 
-        Map<Field, String> allKeys = DbAnnotationsManager.getAllKeysMap(entity.getClass());
+        Map<Field, String> allKeys = DBAnnotationsManager.getAllKeysMap(entity.getClass());
         StringBuilder insertClause = new StringBuilder("INSERT INTO " + tableName + " (");
         StringBuilder valuesClause = new StringBuilder();
         boolean first = true;
@@ -239,16 +238,16 @@ public class TableManager<T> {
         try {
             execUpdate(entity);
         }
-        catch (IllegalArgumentException | IllegalAccessException | UnknownTableNameException | SQLException e) {
+        catch (IllegalArgumentException | IllegalAccessException | SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void execUpdate( T entity ) throws UnknownTableNameException, IllegalArgumentException, IllegalAccessException, SQLException {
-        String tableName = DbAnnotationsManager.getTableName(entity.getClass());
+    private void execUpdate( T entity ) throws IllegalArgumentException, IllegalAccessException, SQLException {
+        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
 
-        Map<Field, String> keys = DbAnnotationsManager.getPrimaryKeysMap(entity.getClass());
-        Map<Field, String> noKeys = DbAnnotationsManager.getNonPrimaryKeysMap(entity.getClass());
+        Map<Field, String> keys = DBAnnotationsManager.getPrimaryKeysMap(entity.getClass());
+        Map<Field, String> noKeys = DBAnnotationsManager.getNonPrimaryKeysMap(entity.getClass());
         StringBuilder updateClause = new StringBuilder("UPDATE " + tableName + " SET ");
         StringBuilder whereClause = new StringBuilder(" WHERE ");
         boolean first = true;
@@ -311,16 +310,16 @@ public class TableManager<T> {
         try {
             return execDelete(entity);
         }
-        catch (IllegalArgumentException | IllegalAccessException | UnknownTableNameException | SQLException e) {
+        catch (IllegalArgumentException | IllegalAccessException | SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    private boolean execDelete( T entity ) throws UnknownTableNameException, IllegalArgumentException, IllegalAccessException, SQLException {
-        String tableName = DbAnnotationsManager.getTableName(entity.getClass());
+    private boolean execDelete( T entity ) throws IllegalArgumentException, IllegalAccessException, SQLException {
+        String tableName = DBAnnotationsManager.getTableName(entity.getClass());
 
-        Map<Field, String> keys = DbAnnotationsManager.getPrimaryKeysMap(entity.getClass());
+        Map<Field, String> keys = DBAnnotationsManager.getPrimaryKeysMap(entity.getClass());
         StringBuilder clause = new StringBuilder("DELETE FROM " + tableName + " WHERE ");
         boolean first = true;
 
@@ -347,7 +346,8 @@ public class TableManager<T> {
         return stmt.executeUpdate() > 0;
     }
 
-    private List<T> fromResultSet( Class<T> entityClass, ResultSet resultSet ) throws InstantiationException, IllegalAccessException, IllegalArgumentException, SQLException {
+    private List<T> fromResultSet( Class<T> entityClass, ResultSet resultSet )
+            throws InstantiationException, IllegalAccessException, IllegalArgumentException, SQLException {
         List<T> results = new ArrayList<T>();
         T currentInstance;
 
@@ -355,7 +355,7 @@ public class TableManager<T> {
             do {
                 currentInstance = (T) entityClass.newInstance();
 
-                for (Entry<Field, String> field : DbAnnotationsManager.getAllKeysMap(entityClass).entrySet()) {
+                for (Entry<Field, String> field : DBAnnotationsManager.getAllKeysMap(entityClass).entrySet()) {
                     field.getKey().setAccessible(true);
                     field.getKey().set(currentInstance, resultSet.getObject(field.getValue()));
                 }

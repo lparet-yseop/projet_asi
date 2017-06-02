@@ -66,8 +66,8 @@ public class UserController implements Serializable {
      */
     public void login( UserLoginBean loginBean ) {
         UserDAO userDao = UserDAO.getInstance();
-        UserBean bean = userDao.getUserAdminByLogin(loginBean.getUserBean());
-
+        UserBean bean = userDao.findByLoginPassword(loginBean.getLogin(), loginBean.getPassword());
+System.out.println(bean);
         if (bean != null) {
             SessionUtil.setUserBean(bean);
             userCounter.addUserConnected();

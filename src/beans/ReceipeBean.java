@@ -1,8 +1,5 @@
 package beans;
 
-import javax.faces.bean.ViewScoped;
-
-@ViewScoped 
 public class ReceipeBean {
 
 	private int id;

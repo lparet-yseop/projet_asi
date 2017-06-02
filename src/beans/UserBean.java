@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import beans.form.UserRegisterBean;
+import beans.utils.DatabaseBean;
 import dao.annotation.DBColumn;
 import dao.annotation.DBTable;
 
@@ -18,7 +19,7 @@ import dao.annotation.DBTable;
 @ManagedBean( name = "userBean" )
 @SessionScoped
 @DBTable( "T_E_USER_USR" )
-public class UserBean implements Serializable {
+public class UserBean extends DatabaseBean implements Serializable {
 
     /** Serializable id */
     private static final long serialVersionUID = -2920686139621697269L;
@@ -165,10 +166,10 @@ public class UserBean implements Serializable {
      */
     @Override
     public String toString() {
-        return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname
-                + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin + "]";
+        return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname + ", datebirthday=" + datebirthday
+                + ", email=" + email + ", admin=" + admin + "]";
     }
-    
+
     /**
      * @return The UserRegisterBean relative to this UserBean
      */

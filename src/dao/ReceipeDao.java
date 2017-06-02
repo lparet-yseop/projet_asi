@@ -122,7 +122,6 @@ public class ReceipeDao extends Dao {
 				receipe.setDifficulty(rs.getInt("REC_DIFFICULTY"));
 				receipe.setNbPeople(rs.getInt("REC_NB_PEOPLE"));
 				receipe.setDuration(rs.getInt("REC_DURATION"));
-				receipe.setPathPhoto(rs.getString("REC_PATH_PHOTO"));
 				CookTypeBean cookTypeBean = new CookTypeBean();
 				cookTypeBean.setId(rs.getInt("COT_ID"));
 				cookTypeBean.setText(rs.getString("COT_TEXT"));
@@ -163,7 +162,6 @@ public class ReceipeDao extends Dao {
 				receipe.setDifficulty(rs.getInt("REC_DIFFICULTY"));
 				receipe.setNbPeople(rs.getInt("REC_NB_PEOPLE"));
 				receipe.setDuration(rs.getInt("REC_DURATION"));
-				receipe.setPathPhoto(rs.getString("REC_PATH_PHOTO"));				
 				CookTypeBean cookTypeBean = new CookTypeBean();
 				cookTypeBean.setId(rs.getInt("COT_ID"));
 				cookTypeBean.setText(rs.getString("COT_TEXT"));
@@ -235,7 +233,6 @@ public class ReceipeDao extends Dao {
 				receipe.setDifficulty(rs.getInt("REC_DIFFICULTY"));
 				receipe.setNbPeople(rs.getInt("REC_NB_PEOPLE"));
 				receipe.setDuration(rs.getInt("REC_DURATION"));
-				receipe.setPathPhoto(rs.getString("REC_PATH_PHOTO"));				
 				CookTypeBean cookTypeBean = new CookTypeBean();
 				cookTypeBean.setId(rs.getInt("COT_ID"));
 				cookTypeBean.setText(rs.getString("COT_TEXT"));

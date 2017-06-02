@@ -2,13 +2,15 @@ package dao.generic;
 
 import java.util.List;
 
+import beans.utils.DatabaseBean;
+
 /**
  * Dao generic interface
  * 
  * @author Lucas Grégoire
  * @param <T> The type entity type
  */
-public interface DAO<T> {
+public interface DAO<T extends DatabaseBean> {
 
     /**
      * Gets all the entities

@@ -3,8 +3,8 @@ package beans;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
+import beans.utils.DatabaseBean;
 import dao.annotation.DBColumn;
 import dao.annotation.DBTable;
 
@@ -14,9 +14,8 @@ import dao.annotation.DBTable;
  * @author Louis Paret, Lucas Grégoire
  */
 @ManagedBean( name = "cookTypeBean" )
-@SessionScoped
 @DBTable( "T_E_COOK_TYPE_COT" )
-public class CookTypeBean implements Serializable {
+public class CookTypeBean extends DatabaseBean implements Serializable {
 
     /** Serializable id */
     private static final long serialVersionUID = -5388685879696441316L;

@@ -3,18 +3,16 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.ViewScoped;
 
 import beans.CookTypeBean;
 import beans.ReceipeBean;
 import dao.ReceipeDao;
 
 @ManagedBean
-@SessionScoped
+//@ViewScoped
 public class ReceipeController {
 
 //	public boolean addReceipt(ReceipeBean receipe) {
@@ -41,14 +39,14 @@ public class ReceipeController {
 	public int cookType;
 	public int duration;
 	public int nbPeople;
-	public List<ReceipeBean> receipes  = new ArrayList<ReceipeBean>();
+	public List<ReceipeBean> receipes;
 	public ReceipeBean selectedReceipe; 
 	
 
 
 	public ReceipeController() {
 		super();
-		//receipes = new ArrayList<ReceipeBean>();
+		receipes = new ArrayList<ReceipeBean>();
 	}
 	
 
@@ -64,18 +62,9 @@ public class ReceipeController {
 	
 	public String goToDetail(ReceipeBean receipeBean){
 		this.selectedReceipe = receipeBean;
-		System.out.println("toto");
 		return "detailReceip";
 	}
 	
-	
-	
-	public String goToDetail(){
-		this.selectedReceipe = this.receipes.get(0);
-		System.out.println("toto");
-		return "detailReceip";
-	}
-
 	public ReceipeBean getReceipe(int receipeId) {
 		ReceipeDao receipeDao = ReceipeDao.getInstance();
 
@@ -96,7 +85,6 @@ public class ReceipeController {
 		if(nbPeople > 0 ) receipeBean.setNbPeople(nbPeople);
 		List<ReceipeBean> list = receipeDao.findByCriteria(receipeBean);
 		receipes = list;
-		selectedReceipe = list.get(1);
 		//return list;
 		return "resultsRecipes";
 	}
@@ -141,21 +129,29 @@ public class ReceipeController {
 		this.selectedReceipe = selectedReceipe;
 	}
 	
-	/**
-     * Delete User
-     */
-    public void deleteReceipe(ReceipeBean receipeBean) {
-    	addMessage(FacesMessage.SEVERITY_INFO, "Non implémenté");
-    }
-    
-    /**
-     * Create a notification message
-     * 
-     * @param severity The severity of the message
-     * @param text The text
-     */
-    public void addMessage( Severity severity, String text ) {
-        FacesMessage message = new FacesMessage(severity, text, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+	
+	
+	
+	
+//	public static void main(String[] args) {
+//
+//		ReceipeControler rc = new ReceipeControler();
+//		System.out.println(rc.getAllReceipes());
+//
+//		ReceipeBean bean = new ReceipeBean("Crepes",
+//				"Farine + oeuf + lait + biere", "Delicieuse crepes", 4, 1,
+//				"Dessert", "crepes.png");
+//		boolean addReceipt = rc.addReceipt(bean);
+//		System.out.println("Add receipe: " + addReceipt);
+//
+//		bean.setNbPersons(1);
+//		bean.setId(1);
+//		boolean editUser = rc.editReceipe(bean);
+//		System.out.println("User edit: " + editUser);
+//
+//		bean = rc.getReceipe(1);
+//		System.out.println("User edited:" + bean);
+//		System.out.println(rc.getAllReceipes());
+//
+//	}
 }
