@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 
+import beans.form.RecipeAdministrationBean;
 import beans.utils.DatabaseBean;
 import dao.annotation.DBColumn;
 import dao.annotation.DBJoin;
@@ -156,6 +157,21 @@ public class RecipeBean extends DatabaseBean implements Serializable {
         this.cookTypeBean = cookTypeBean;
     }
 
+    /**
+     * @return The UserAdministrationBean relative to this UserBean
+     */
+    public RecipeAdministrationBean getRecipeAdministrationBean() {
+        RecipeAdministrationBean adminRecipe = new RecipeAdministrationBean();
+
+        adminRecipe.setId(id);
+        adminRecipe.setDuration(duration);
+        adminRecipe.setDifficulty(difficulty);
+        adminRecipe.setTitle(title);
+        adminRecipe.setDescription(description);
+
+        return adminRecipe;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -163,8 +179,8 @@ public class RecipeBean extends DatabaseBean implements Serializable {
      */
     @Override
     public String toString() {
-        return "RecipeBean [id=" + id + ", duration=" + duration + ", difficulty=" + difficulty + ", nbPeople=" + nbPeople + ", title=" + title
-                + ", description=" + description + ", pathPhoto=" + pathPhoto + ", cookTypeBean=" + cookTypeBean + "]";
+        return "RecipeBean [id=" + id + ", duration=" + duration + ", difficulty=" + difficulty + ", nbPeople=" + nbPeople + ", title=" + title + ", description=" + description
+                + ", pathPhoto=" + pathPhoto + ", cookTypeBean=" + cookTypeBean + "]";
     }
 
 }

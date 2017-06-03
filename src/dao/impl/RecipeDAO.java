@@ -55,7 +55,7 @@ public class RecipeDAO extends AbstractDAO<RecipeBean> {
                 if (i > 0)
                     sb.append(" AND ");
 
-                sb.append(DBAnnotationsManager.getTableName(RecipeBean.class) + ".cot_id = ");
+                sb.append(DBAnnotationsManager.getTableName(RecipeBean.class) + ".cot_id = ?");
                 map.put(++i, bean.getCookTypeBean().getId());
             }
 
@@ -63,7 +63,7 @@ public class RecipeDAO extends AbstractDAO<RecipeBean> {
                 if (i > 0)
                     sb.append(" AND ");
 
-                sb.append("rec_duration = ");
+                sb.append("rec_duration = ?");
                 map.put(++i, bean.getDuration());
             }
 
@@ -74,9 +74,11 @@ public class RecipeDAO extends AbstractDAO<RecipeBean> {
                 sb.append("rec_difficulty = ?");
                 map.put(++i, bean.getDifficulty());
             }
-        }
 
-        return manager2.findAllByCustomWhereClause(sb.toString(), map);
+            if (i > 0)
+                return manager.findAllByCustomWhereClause(sb.toString(), map);
+        }
+        return manager.findAll();
     }
 
 }

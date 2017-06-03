@@ -16,6 +16,7 @@ import dao.utils.DBAccess;
 public class DatabaseConnector {
 
     private static DatabaseConnector instance;
+    private final static boolean showRequest = true;
 
     /**
      * Constructor of DatabaseConnector
@@ -24,16 +25,19 @@ public class DatabaseConnector {
     }
 
     /**
-     * Executes a query and returns the ResultSet
+     * Executes a select query and returns the ResultSet
      * 
      * @param query The query string
      * @param parameters The map of parameters
      * @return The ResultSet
      * @throws SQLException If an error occured
      */
-    public ResultSet executeRequest( String query, Map<Integer, Object> parameters ) throws SQLException {
+    public ResultSet executeQuery( String query, Map<Integer, Object> parameters ) throws SQLException {
         // Preparing statement
         PreparedStatement stmt = DBAccess.getConnection().prepareStatement(query);
+
+        if (showRequest)
+            System.out.println(query);
 
         // Setting parameters
         if (parameters != null)
@@ -41,6 +45,29 @@ public class DatabaseConnector {
                 stmt.setObject(entry.getKey(), entry.getValue());
 
         return stmt.executeQuery();
+    }
+
+    /**
+     * Executes a update (insert, update, delete) query and returns the status as boolean
+     * 
+     * @param query The query string
+     * @param parameters The map of parameters
+     * @return true if the query succeed
+     * @throws SQLException If an error occured
+     */
+    public boolean executeUpdate( String query, Map<Integer, Object> parameters ) throws SQLException {
+        // Preparing statement
+        PreparedStatement stmt = DBAccess.getConnection().prepareStatement(query);
+
+        if (showRequest)
+            System.out.println(query);
+        
+        // Setting parameters
+        if (parameters != null)
+            for (Entry<Integer, Object> entry : parameters.entrySet())
+                stmt.setObject(entry.getKey(), entry.getValue());
+
+        return stmt.executeUpdate() > 0;
     }
 
     /**

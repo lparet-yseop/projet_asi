@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import beans.form.UserRegisterBean;
+import beans.form.UserAdministrationBean;
 import beans.utils.DatabaseBean;
 import dao.annotation.DBColumn;
 import dao.annotation.DBTable;
@@ -171,19 +171,19 @@ public class UserBean extends DatabaseBean implements Serializable {
     }
 
     /**
-     * @return The UserRegisterBean relative to this UserBean
+     * @return The UserAdministrationBean relative to this UserBean
      */
-    public UserRegisterBean getUserBean() {
-        UserRegisterBean userRegister = new UserRegisterBean();
+    public UserAdministrationBean getUserAdministrationBean() {
+        UserAdministrationBean adminUser = new UserAdministrationBean();
 
-        userRegister.setFirstname(firstname);
-        userRegister.setLastname(lastname);
-        userRegister.setBirthdate(datebirthday);
-        userRegister.setEmail(email);
-        userRegister.setLogin(login);
-        userRegister.setPassword(password);
+        adminUser.setId(id);
+        adminUser.setFirstname(firstname);
+        adminUser.setLastname(lastname);
+        adminUser.setLogin(login);
+        adminUser.setPassword(password);
+        adminUser.setAdmin(admin);
 
-        return userRegister;
+        return adminUser;
     }
 
 }

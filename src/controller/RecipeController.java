@@ -1,148 +1,169 @@
 package controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import beans.CookTypeBean;
 import beans.RecipeBean;
+import beans.form.RecipeAdministrationBean;
+import beans.form.RecipeSearchBean;
 import dao.impl.RecipeDAO;
 
-@ManagedBean
-// @ViewScoped
-public class RecipeController {
+/**
+ * Controller for recipes management
+ * 
+ * @author Hugo Blanc, Lucas Grégoire
+ */
+@ManagedBean( name = "recipeController" )
+@SessionScoped
+public class RecipeController implements Serializable {
 
-    // public boolean addReceipt(ReceipeBean receipe) {
-    // ReceipeDao receipeDao = ReceipeDao.getInstance();
-    //
-    // boolean rs = receipeDao.add(receipe.getName(), receipe.getDetails(),
-    // receipe.getResume(), receipe.getNbPersons(),
-    // receipe.getComplexity(), receipe.getType(), receipe.getImage());
-    //
-    // return rs;
-    // }
-    //
-    // public boolean editReceipe(ReceipeBean receipe) {
-    // ReceipeDao receipeDao = ReceipeDao.getInstance();
-    //
-    // boolean rs = receipeDao.edit(receipe.getId(), receipe.getName(),
-    // receipe.getDetails(), receipe.getResume(),
-    // receipe.getNbPersons(), receipe.getComplexity(),
-    // receipe.getType(), receipe.getImage());
-    //
-    // return rs;
-    // }
+    /** Serializable id */
+    private static final long serialVersionUID = 5049629637751803488L;
 
-    public int cookType;
-    public int duration;
-    public int nbPeople;
-    public List<RecipeBean> recipes;
-    public RecipeBean selectedRecipe;
+    private List<RecipeBean> results;
+    private RecipeBean selectedRecipe;
 
+    /**
+     * Constructor
+     */
     public RecipeController() {
         super();
-        recipes = new ArrayList<RecipeBean>();
+        results = new ArrayList<RecipeBean>();
     }
 
-    public List<RecipeBean> getAllReceipes() {
-        RecipeDAO receipeDao = RecipeDAO.getInstance();
+    /**
+     * Goes to detail page
+     * 
+     * @param recipeBean The selected recipe
+     * @return The page of details
+     */
+    public String goToDetail( RecipeBean recipeBean ) {
+        this.selectedRecipe = recipeBean;
 
-        List<RecipeBean> list = receipeDao.findAll();
+        // ControllerUtils.addMessage(FacesMessage.SEVERITY_INFO, "Welcome to Primefaces!!");
 
-        return list;
+        return "detailRecipe";
     }
 
-    public String goToDetail( RecipeBean receipeBean ) {
-        this.selectedRecipe = receipeBean;
-        return "detailReceip";
-    }
+    /**
+     * Back to results page
+     * 
+     * @return The results page
+     */
+    public String goToResults() {
+        this.selectedRecipe = null;
 
-    public RecipeBean getReceipe( int receipeId ) {
-        RecipeDAO receipeDao = RecipeDAO.getInstance();
-
-        RecipeBean receipe = receipeDao.findOneById(receipeId);
-
-        return receipe;
-    }
-
-    public String getReceipesByCriteria() {
-        RecipeDAO receipeDao = RecipeDAO.getInstance();
-
-        RecipeBean receipeBean = new RecipeBean();
-        if (duration > 0)
-            receipeBean.setDuration(duration);
-        CookTypeBean cookTypeBean = new CookTypeBean();
-        cookTypeBean.setId(cookType);
-        if (cookType > 0)
-            receipeBean.setCookTypeBean(cookTypeBean);
-        if (nbPeople > 0)
-            receipeBean.setNbPeople(nbPeople);
-        List<RecipeBean> list = receipeDao.findByCriteria(receipeBean);
-        recipes = list;
-        // return list;
         return "resultsRecipes";
     }
 
-    public int getCookType() {
-        return cookType;
+//    public RecipeBean getReceipe( int receipeId ) {
+//        RecipeDAO receipeDao = RecipeDAO.getInstance();
+//
+//        RecipeBean receipe = receipeDao.findOneById(receipeId);
+//
+//        return receipe;
+//    }
+
+    /**
+     * Launch the search using the RecipeSearchBean
+     * 
+     * @param search The search criteria bean
+     * @return The result page
+     */
+    public String getRecipesByCriteria( RecipeSearchBean search ) {
+        RecipeDAO receipeDao = RecipeDAO.getInstance();
+        RecipeBean receipeBean = new RecipeBean();
+
+        if (search.getDuration() > 0)
+            receipeBean.setDuration(search.getDuration());
+
+        CookTypeBean cookTypeBean = new CookTypeBean();
+        cookTypeBean.setId(search.getCookType());
+        if (search.getCookType() > 0)
+            receipeBean.setCookTypeBean(cookTypeBean);
+        if (search.getNbPeople() > 0)
+            receipeBean.setNbPeople(search.getNbPeople());
+
+        results = receipeDao.findByCriteria(receipeBean);
+
+        return "resultsRecipes";
     }
 
-    public void setCookType( int cookType ) {
-        this.cookType = cookType;
+    /**
+     * Get All Recipes
+     * 
+     * @return The list of Recipes
+     */
+    public List<RecipeAdministrationBean> getAllRecipes() {
+        RecipeDAO recipeDAO = RecipeDAO.getInstance();
+        List<RecipeBean> recipes = recipeDAO.findAll();
+        List<RecipeAdministrationBean> adminRecipes = new ArrayList<RecipeAdministrationBean>();
+
+        for (RecipeBean recipe : recipes) {
+            adminRecipes.add(recipe.getRecipeAdministrationBean());
+        }
+
+        return adminRecipes;
     }
 
-    public int getDuration() {
-        return duration;
+    /**
+     * Delete Recipe
+     * 
+     * @param recipeAdministrationBean The recipe to delete
+     */
+    public void deleteRecipe( RecipeAdministrationBean recipeAdministrationBean ) {
+        RecipeDAO recipeDAO = RecipeDAO.getInstance();
+        recipeDAO.delete(recipeAdministrationBean.getRecipeBean());
+        // addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur supprimé");
     }
 
-    public void setDuration( int duration ) {
-        this.duration = duration;
+    /**
+     * Edit an Recipe
+     * 
+     * @param recipeAdministrationBean The recipe to edit
+     */
+    public void setRecipe( RecipeAdministrationBean recipeAdministrationBean ) {
+        RecipeDAO recipeDao = RecipeDAO.getInstance();
+
+        if (recipeDao.update(recipeAdministrationBean.getRecipeBean()) != null) {
+            // addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur modifié");
+        }
+        else {
+            // addMessage(FacesMessage.SEVERITY_INFO, "Echec modification");
+        }
     }
 
-    public int getNbPeople() {
-        return nbPeople;
+    /**
+     * @return the results
+     */
+    public List<RecipeBean> getResults() {
+        return results;
     }
 
-    public void setNbPeople( int nbPeople ) {
-        this.nbPeople = nbPeople;
+    /**
+     * @param results the results to set
+     */
+    public void setResults( List<RecipeBean> results ) {
+        this.results = results;
     }
 
-    public List<RecipeBean> getReceipes() {
-        return recipes;
-    }
-
-    public void setReceipes( List<RecipeBean> receipes ) {
-        this.recipes = receipes;
-    }
-
-    public RecipeBean getSelectedReceipe() {
+    /**
+     * @return the selectedRecipe
+     */
+    public RecipeBean getSelectedRecipe() {
         return selectedRecipe;
     }
 
-    public void setSelectedReceipe( RecipeBean selectedReceipe ) {
-        this.selectedRecipe = selectedReceipe;
+    /**
+     * @param selectedRecipe the selectedRecipe to set
+     */
+    public void setSelectedRecipe( RecipeBean selectedRecipe ) {
+        this.selectedRecipe = selectedRecipe;
     }
 
-    // public static void main(String[] args) {
-    //
-    // ReceipeControler rc = new ReceipeControler();
-    // System.out.println(rc.getAllReceipes());
-    //
-    // ReceipeBean bean = new ReceipeBean("Crepes",
-    // "Farine + oeuf + lait + biere", "Delicieuse crepes", 4, 1,
-    // "Dessert", "crepes.png");
-    // boolean addReceipt = rc.addReceipt(bean);
-    // System.out.println("Add receipe: " + addReceipt);
-    //
-    // bean.setNbPersons(1);
-    // bean.setId(1);
-    // boolean editUser = rc.editReceipe(bean);
-    // System.out.println("User edit: " + editUser);
-    //
-    // bean = rc.getReceipe(1);
-    // System.out.println("User edited:" + bean);
-    // System.out.println(rc.getAllReceipes());
-    //
-    // }
 }

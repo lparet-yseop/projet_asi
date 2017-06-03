@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" template="templates/main-template.xhtml" xmlns:p="http://primefaces.org/ui">
+	<ui:define name="header-title">Emergency</ui:define>
+	<ui:define name="main-content">
+		<h1>Manage Recipe</h1>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-block">
+						<table class="table table-striped">
+							<thead class="thead-inverse">
+								<tr>
+									<th>Titre</th>
+									<th>Durée</th>
+									<th>Difficulté</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<ui:repeat value="#{recipeController.getAllRecipes()}" var="recipeAdministrationBean">
+									<tr>
+										<td>#{recipeAdministrationBean.title}</td>
+										<td>#{recipeAdministrationBean.duration}</td>
+										<td>#{recipeAdministrationBean.difficulty}</td>
+										<td><h:form>
+												<p:growl id="growl" life="2000" />
+												<h:commandButton type="submit" class="btn btn-danger ml-2" value="Delete" action="#{recipeController.deleteRecipe(recipeAdministrationBean)}" />
+												<h:commandButton type="submit" class="btn btn-primary ml-2" value="Modify" />
+											</h:form></td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-block">
+						<h:form id="form-register">
+	                		<h:inputHidden value="#{recipeAdministrationBean.id}"/>
+							<p:growl id="growl" life="2000" />
+							<div class="form-group row">
+								<label for="title" class="col-2 col-form-label">Title</label>
+								<div class="col-10">
+									<h:inputText id="title" value="#{recipeAdministrationBean.title}" class="form-control" required="true" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="duration" class="col-2 col-form-label">Duration</label>
+								<div class="col-10">
+									<h:inputText id="duration" value="#{recipeAdministrationBean.duration}" class="form-control" required="true" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="difficulty" class="col-2 col-form-label">Difficulté</label>
+								<div class="col-10">
+									<h:inputText id="difficulty" value="#{recipeAdministrationBean.difficulty}" class="form-control" required="true" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="description" class="col-2 col-form-label">Description</label>
+								<div class="col-10">
+									<h:inputTextarea id="description" value="#{recipeAdministrationBean.description}" class="form-control" required="true" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-sm-12">
+									<div class="text-right" style="font-size: 0">
+										<h:commandButton type="submit" class="btn btn-success ml-2" value="Modify" action="#{recipeController.setRecipe(recipeAdministrationBean)}" />
+									</div>
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
