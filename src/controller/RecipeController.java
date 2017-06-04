@@ -3,6 +3,7 @@ package controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -15,6 +16,7 @@ import beans.UserBean;
 import beans.form.RecipeAdministrationBean;
 import beans.form.RecipeSearchBean;
 import dao.CommentDao;
+
 import dao.impl.RecipeDAO;
 
 /**
@@ -49,12 +51,14 @@ public class RecipeController implements Serializable {
      */
     public String goToDetail( RecipeBean recipeBean ) {
         this.selectedRecipe = recipeBean;
+
         commentBeans = getCommentByRecipe(); 
+
         // ControllerUtils.addMessage(FacesMessage.SEVERITY_INFO, "Welcome to Primefaces!!");
 
         return "detailRecipe";
     }
-    
+
     /**
      * Back to results page
      * 
@@ -99,7 +103,7 @@ public class RecipeController implements Serializable {
         return "resultsRecipes";
     }
 
-    
+
     /**
      * Get All Recipes
      * 
@@ -127,7 +131,7 @@ public class RecipeController implements Serializable {
         recipeDAO.delete(recipeAdministrationBean.getRecipeBean());
         // addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur supprimé");
     }
-    
+
     
     
 	public List<CommentBean> getCommentByRecipe(){
@@ -142,6 +146,7 @@ public class RecipeController implements Serializable {
     	commentDao.add(text, new Date(), 0, selectedRecipe, userBean);
     	return goToResults();
     }
+
 
     /**
      * Edit an Recipe
@@ -197,7 +202,5 @@ public class RecipeController implements Serializable {
 	}
 
     
-    
-    
-    
+
 }
