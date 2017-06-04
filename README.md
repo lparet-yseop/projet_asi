@@ -2,6 +2,8 @@
 
 Noms : Hugo Blanc, Lucas Grégoire et Louis Paret
 
+
+Vidéo: https://youtu.be/8H7izIEKaRo
 Commentaires :
 
 - Gros travail sur le DAO pour le faire le plus générique possible
