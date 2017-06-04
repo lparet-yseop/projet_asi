@@ -2,7 +2,12 @@ package beans;
 
 import java.util.Date;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.view.ViewScoped;
 
+@ManagedBean
+@ViewScoped
 public class CommentBean {
 
 	private int id;

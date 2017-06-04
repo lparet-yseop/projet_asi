@@ -2,6 +2,7 @@ package controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,6 +11,7 @@ import javax.faces.bean.SessionScoped;
 import beans.CommentBean;
 import beans.CookTypeBean;
 import beans.RecipeBean;
+import beans.UserBean;
 import beans.form.RecipeAdministrationBean;
 import beans.form.RecipeSearchBean;
 import dao.CommentDao;
@@ -29,7 +31,7 @@ public class RecipeController implements Serializable {
 
     private List<RecipeBean> results;
     private RecipeBean selectedRecipe;
-	public List<CommentBean> commentBeans;    
+	public List<CommentBean> commentBeans; 
 
     /**
      * Constructor
@@ -47,12 +49,12 @@ public class RecipeController implements Serializable {
      */
     public String goToDetail( RecipeBean recipeBean ) {
         this.selectedRecipe = recipeBean;
-
+        commentBeans = getCommentByRecipe(); 
         // ControllerUtils.addMessage(FacesMessage.SEVERITY_INFO, "Welcome to Primefaces!!");
 
         return "detailRecipe";
     }
-
+    
     /**
      * Back to results page
      * 
@@ -97,6 +99,7 @@ public class RecipeController implements Serializable {
         return "resultsRecipes";
     }
 
+    
     /**
      * Get All Recipes
      * 
@@ -132,7 +135,13 @@ public class RecipeController implements Serializable {
 		return commentDao.findByRecipe(this.selectedRecipe);
 	}
     
-    
+    public String postComment(String text, int id){
+    	CommentDao commentDao =  CommentDao.getInstance();
+    	UserBean userBean = new UserBean();
+    	userBean.setId(id);
+    	commentDao.add(text, new Date(), 0, selectedRecipe, userBean);
+    	return goToResults();
+    }
 
     /**
      * Edit an Recipe
