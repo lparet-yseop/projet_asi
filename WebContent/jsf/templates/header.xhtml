@@ -15,7 +15,7 @@
 				<c:if test="#{empty userBean.login}">
 					<h:form class="form-inline justify-content-md-center justify-content-end">
 						<h:inputText class="form-control col-4 mr-sm-1" id="login" name="login" value="#{userLoginBean.login}" type="text" ph:placeholder="Login" required="true" />
-						<h:inputText class="form-control col-4 mr-sm-1" id="password" name="password" value="#{userLoginBean.password}" type="text" ph:placeholder="Password" required="true" />
+						<h:inputSecret class="form-control col-4 mr-sm-1" id="password" name="password" value="#{userLoginBean.password}" type="text" ph:placeholder="Password" required="true" />
 						<h:commandButton type="submit" class="btn btn-outline-secondary col-2 my-2 my-sm-0" style="border-color: white; color: white;" value="Login"
 							action="#{userController.login(userLoginBean)}" />
 					</h:form>
