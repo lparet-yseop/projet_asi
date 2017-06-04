@@ -171,6 +171,17 @@ public class UserBean extends DatabaseBean implements Serializable {
 		return pathPhoto;
 	}
 
+	public void setPathPhoto(String pathPhoto) {
+		this.pathPhoto = pathPhoto;
+	}
+
+	@Override
+	public String toString() {
+		return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin
+				+ ", pathPhoto=" + pathPhoto + "]";
+	}
+
     /**
      * @return The UserAdministrationBean relative to this UserBean
      */
@@ -186,16 +197,5 @@ public class UserBean extends DatabaseBean implements Serializable {
 
         return adminUser;
     }
-
-	public void setPathPhoto(String pathPhoto) {
-		this.pathPhoto = pathPhoto;
-	}
-
-	@Override
-	public String toString() {
-		return "UserBean [id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname
-				+ ", lastname=" + lastname + ", datebirthday=" + datebirthday + ", email=" + email + ", admin=" + admin
-				+ ", pathPhoto=" + pathPhoto + "]";
-	}
 
 }
