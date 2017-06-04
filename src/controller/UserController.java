@@ -1,16 +1,15 @@
 package controller;
 
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 
 import beans.UserBean;
+import beans.form.UserAdministrationBean;
 import beans.form.UserLoginBean;
 import beans.form.UserRegisterBean;
 import beans.utils.SessionUtil;
@@ -31,51 +30,22 @@ public class UserController implements Serializable {
     private UserCounter userCounter = new UserCounter();
 
     /**
-     * Create a notification message
-     * 
-     * @param severity The severity of the message
-     * @param text The text
-     */
-    public void addMessage( Severity severity, String text ) {
-        FacesMessage message = new FacesMessage(severity, text, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    /**
-     * method to redirect to other page
-     * 
-     * @param page The page to redirect to
-     */
-    public void redirectTo( String page ) {
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        context.getFlash().setKeepMessages(true);
-
-        try {
-            context.redirect(context.getRequestContextPath() + "/jsf/" + page + ".jsf");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Get user by login, used for the connection
      * 
      * @param loginBean The UserLoginBean to login
      */
     public void login( UserLoginBean loginBean ) {
         UserDAO userDao = UserDAO.getInstance();
-        UserBean bean = userDao.getUserAdminByLogin(loginBean.getUserBean());
-
+        UserBean bean = userDao.findByLoginPassword(loginBean.getLogin(), loginBean.getPassword());
+        System.out.println(bean);
         if (bean != null) {
             SessionUtil.setUserBean(bean);
             userCounter.addUserConnected();
-
-            redirectTo("activities");
+            ControllerUtils.redirectTo("activities");
         }
         else {
-            logout();
-            addMessage(FacesMessage.SEVERITY_WARN, "Connexion échouée");
+            SessionUtil.clearSession();
+            ControllerUtils.addMessage(FacesMessage.SEVERITY_WARN, "Connexion échouée");
         }
     }
 
@@ -86,14 +56,9 @@ public class UserController implements Serializable {
      */
     public void register( UserRegisterBean registerBean ) {
         UserDAO userDao = UserDAO.getInstance();
-
-        if (userDao.insert(registerBean.getUserBean()) != null) {
-            addMessage(FacesMessage.SEVERITY_INFO, "Inscription réalisée");
-            redirectTo("login");
-        }
-        else {
-            addMessage(FacesMessage.SEVERITY_WARN, "Echec de l'inscription");
-        }
+        userDao.insert(registerBean.getUserBean());
+        ControllerUtils.addMessage(FacesMessage.SEVERITY_INFO, "Inscription réalisée");
+        ControllerUtils.redirectTo("login");
     }
 
     /**
@@ -102,5 +67,49 @@ public class UserController implements Serializable {
     public void logout() {
         SessionUtil.clearSession();
         userCounter.deleteUserConnected();
+    }
+
+    /**
+     * Get All Users
+     * 
+     * @return The list of Users
+     */
+    public List<UserAdministrationBean> getAllUsers() {
+        UserDAO userDao = UserDAO.getInstance();
+        List<UserBean> users = userDao.findAll();
+        List<UserAdministrationBean> adminUsers = new ArrayList<UserAdministrationBean>();
+
+        for (UserBean user : users) {
+            adminUsers.add(user.getUserAdministrationBean());
+        }
+
+        return adminUsers;
+    }
+
+    /**
+     * Delete User
+     * 
+     * @param userAdministrationBean The user to delete
+     */
+    public void deleteUser( UserAdministrationBean userAdministrationBean ) {
+        UserDAO userDao = UserDAO.getInstance();
+        userDao.delete(userAdministrationBean.getUserBean());
+        ControllerUtils.addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur supprimé");
+    }
+
+    /**
+     * Edit an User
+     * 
+     * @param userAdministrationBean The user to edit
+     */
+    public void setUser( UserAdministrationBean userAdministrationBean ) {
+        UserDAO userDao = UserDAO.getInstance();
+
+        if (userDao.update(userAdministrationBean.getUserBean()) != null) {
+            ControllerUtils.addMessage(FacesMessage.SEVERITY_INFO, "Utilisateur modifié");
+        }
+        else {
+            ControllerUtils.addMessage(FacesMessage.SEVERITY_INFO, "Echec modification");
+        }
     }
 }

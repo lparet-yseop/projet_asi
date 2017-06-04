@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" template="templates/main-template.xhtml">
+	<ui:define name="header-title">Result recipes</ui:define>
+	<ui:define name="main-content">
+		<h:form>
+			<p:graphicImage value="../resources/images/#{recipeController.selectedRecipe.pathPhoto}" style="width: 350px" />
+			<p:panelGrid columns="2" columnClasses="label,value">
+				<h:outputText value="Title:" />
+				<h:outputText value="#{recipeController.selectedRecipe.title}" style="font-weight: bold" />
+
+				<h:outputText value="Description:" />
+				<h:outputText value="#{recipeController.selectedRecipe.description}" style="font-weight: bold" />
+
+				<h:outputText value="Difficulty:" />
+				<h:outputText value="#{recipeController.selectedRecipe.difficulty}" style="font-weight: bold" />
+
+				<h:outputText value="Number of eatters:" />
+				<h:outputText value="#{recipeController.selectedRecipe.nbPeople}" style="font-weight: bold" />
+
+				<h:outputText value="Type:" />
+				<h:outputText value="#{recipeController.selectedRecipe.cookTypeBean.text}" style="font-weight: bold" />
+
+			</p:panelGrid>
+			<p:commandButton action="#{recipeController.goToResults}" class="btn btn-primary" value="Back" />
+			<h:messages />
+		</h:form>
+
+
+
+
+		<div class="container">
+			<div class="row">
+				<div class="comments col-md-9" id="comments">
+					<h3 class="mb-2">Comments</h3>
+					<!-- comment -->
+
+					<ui:repeat var="comment" value="#{receipeController.commentBeans}" varStatus="status">
+
+
+
+						<div class="comment mb-2 row">
+							<div class="comment-avatar col-md-1 col-sm-2 text-center pr-1">
+								<a href=""><p:graphicImage value="../resources/images/#{comment.userBean.pathPhoto}" style="width: 350px" class="mx-auto rounded-circle img-fluid" alt="avatar" /></a>
+							</div>
+							<div class="comment-content col-md-11 col-sm-10">
+								<h6 class="small comment-meta">
+									<a href="#">#{comment.userBean.firstname}</a> #{comment.date}
+								</h6>
+								<div class="comment-body">
+									<p>
+										<br /> #{comment.text} <br />
+									</p>
+								</div>
+							</div>
+						</div>
+
+
+					</ui:repeat>
+
+				</div>
+			</div>
+		</div>
+
+
+	</ui:define>
+</ui:composition>
+
+
+
+

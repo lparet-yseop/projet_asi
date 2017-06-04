@@ -1,11 +1,10 @@
 package dao.impl;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import beans.UserBean;
-import dao.annotation.DbAnnotationsManager;
 import dao.generic.AbstractDAO;
-import dao.utils.UnknownTableNameException;
 
 /**
  * DAO for UserBean
@@ -33,21 +32,31 @@ public class UserDAO extends AbstractDAO<UserBean> {
     }
 
     /**
-     * Gets the user by his login
+     * Gets the user by his login & password
      * 
-     * @param userBean The userBean
+     * @param login The login of the user
+     * @param password The password of the user
      * @return The user found or null
      */
-    public UserBean getUserAdminByLogin( UserBean userBean ) {
-        try {
-            StringBuilder request = new StringBuilder("SELECT * FROM " + DbAnnotationsManager.getTableName(userBean.getClass()));
-            request.append(" WHERE usr_login = ? AND usr_password = ? AND usr_admin = 1");
-            return manager.executeSelect(UserBean.class, request.toString(), Arrays.asList(userBean.getLogin(), userBean.getPassword()));
-        }
-        catch (UnknownTableNameException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public UserBean findByLoginPassword( String login, String password ) {
+        Map<Integer, Object> map = new HashMap<Integer, Object>();
+        map.put(1, login);
+        map.put(2, password);
+
+        return manager.findOneByCustomWhereClause("usr_login = ? AND usr_password = ? AND usr_admin = 1", map);
+    }
+
+    /**
+     * Gets the user by his email
+     * 
+     * @param email The email of the user
+     * @return The user found or null
+     */
+    public UserBean findByMail( String email ) {
+        Map<Integer, Object> map = new HashMap<Integer, Object>();
+        map.put(1, email);
+
+        return manager.findOneByCustomWhereClause("usr_email = ?", map);
     }
 
 }

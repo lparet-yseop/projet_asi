@@ -12,7 +12,7 @@ import java.util.List;
 
 import beans.CommentBean;
 import beans.CookTypeBean;
-import beans.ReceipeBean;
+import beans.RecipeBean;
 import beans.UserBean;
 
 public class CommentDao extends Dao {
@@ -30,7 +30,7 @@ public class CommentDao extends Dao {
 		return commentDao;
 	}
 	
-	public boolean add(String text, Date date, int mark, ReceipeBean receipeBean, UserBean userBean) {
+	public boolean add(String text, Date date, int mark, RecipeBean receipeBean, UserBean userBean) {
 		boolean result = false;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -64,7 +64,7 @@ public class CommentDao extends Dao {
 	}
 	
 	
-	public List<CommentBean> findByReceipe(ReceipeBean receipeBean) {
+	public List<CommentBean> findByRecipe(RecipeBean receipeBean) {
 		List<CommentBean> commentList = new ArrayList<CommentBean>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -90,7 +90,7 @@ public class CommentDao extends Dao {
 				comment.setText(rs.getString("COM_TEXT"));
 				comment.setDate(rs.getDate("COM_DATE"));
 				comment.setMark(rs.getInt("COM_MARK"));
-				ReceipeBean receipeBean2 = new ReceipeBean();
+				RecipeBean receipeBean2 = new RecipeBean();
 				receipeBean.setId(rs.getInt("REC_ID"));
 				comment.setReceipeBean(receipeBean2);
 				UserBean userBean = new UserBean();

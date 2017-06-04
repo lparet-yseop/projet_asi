@@ -1,28 +1,28 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" template="templates/main-template.xhtml">
-    <ui:define name="header-title">Emergency</ui:define>
-    <ui:define name="main-content">
-    	<div class="row">
-            <div class="col-sm-6">
-                <div class="card" style="width: 20rem;margin: auto; text-align: center;">
-                    <div class="card-block">
-                    	<p class="card-text" style="font-size: 80px;">
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" template="templates/main-template.xhtml">
+	<ui:define name="header-title">Emergency</ui:define>
+	<ui:define name="main-content">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card" style="width: 20rem; margin: auto; text-align: center;">
+					<div class="card-block">
+						<p class="card-text" style="font-size: 80px;">
 							<i class="fa fa-users mr-sm-1" aria-hidden="true"></i>
-						</p> 
-                        <a href="userAdministration.jsf" class="btn btn-primary">Manage Users</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card" style="width: 20rem;margin: auto; text-align: center;">
-                    <div class="card-block">
-                    	<p class="card-text" style="font-size: 80px;">
-							<i class="fa fa-pencil-square-o mr-sm-1"  aria-hidden="true"></i>
-						</p> 
-                        <a href="receipAdministration.jsf" class="btn btn-primary">Manage Receipes</a>
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </ui:define>
+						</p>
+						<h:link class="btn btn-primary" value="Manage Users" outcome="userAdministration" />
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="card" style="width: 20rem; margin: auto; text-align: center;">
+					<div class="card-block">
+						<p class="card-text" style="font-size: 80px;">
+							<i class="fa fa-pencil-square-o mr-sm-1" aria-hidden="true"></i>
+						</p>
+						<h:link class="btn btn-primary" value="Manage Recipes" outcome="recipeAdministration" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
 </ui:composition>

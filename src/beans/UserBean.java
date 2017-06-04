@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import beans.form.UserAdministrationBean;
+import beans.utils.DatabaseBean;
 import dao.annotation.DBColumn;
 import dao.annotation.DBTable;
 
@@ -17,7 +19,7 @@ import dao.annotation.DBTable;
 @ManagedBean( name = "userBean" )
 @SessionScoped
 @DBTable( "T_E_USER_USR" )
-public class UserBean implements Serializable {
+public class UserBean extends DatabaseBean implements Serializable {
 
     /** Serializable id */
     private static final long serialVersionUID = -2920686139621697269L;
@@ -168,6 +170,22 @@ public class UserBean implements Serializable {
     public String getPathPhoto() {
 		return pathPhoto;
 	}
+
+    /**
+     * @return The UserAdministrationBean relative to this UserBean
+     */
+    public UserAdministrationBean getUserAdministrationBean() {
+        UserAdministrationBean adminUser = new UserAdministrationBean();
+
+        adminUser.setId(id);
+        adminUser.setFirstname(firstname);
+        adminUser.setLastname(lastname);
+        adminUser.setLogin(login);
+        adminUser.setPassword(password);
+        adminUser.setAdmin(admin);
+
+        return adminUser;
+    }
 
 	public void setPathPhoto(String pathPhoto) {
 		this.pathPhoto = pathPhoto;
