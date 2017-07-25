@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<!-- Styles -->
+	<link rel="stylesheet" href="../webjars/tether/1.4.0/dist/css/tether.min.css" />
+	<link rel="stylesheet" href="../webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.css" />
+	<link rel="stylesheet" href="../webjars/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/global-styles.css" />
+	<!-- Scripts -->
+	<script src="../webjars/tether/1.4.0/dist/js/tether.min.js"></script>
+	<script src="../webjars/bootstrap/4.0.0-alpha.6-1/js/bootstrap.min.js"></script>
+</h:head>
+<h:body>
+	<ui:include src="header.xhtml" />
+	<div class="container mt-4">
+		<ui:insert name="main-content"></ui:insert>
+	</div>
+	<footer class="footer navbar-fixed-bottom bg-faded pt-3">
+		<div class="container">
+			<p class="float-left">© Copyright 2017</p>
+			<p class="float-right">Projet ASI</p>
+		</div>
+	</footer>
+	<ui:debug hotkey="x" />
+</h:body>
+</html>

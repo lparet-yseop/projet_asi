@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+    template="templates/main-template.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="header-title">Emergency</ui:define>
+    <ui:define name="main-content">
+        <h1>Login Page</h1>
+        <h:form>
+            <p:growl id="growl" life="2000" />
+            <div class="form-group row #{login.valid ? '' : 'has-danger'}">
+                <label for="login" class="col-2 col-form-label">Login</label>
+                <div class="col-10">
+                    <h:inputText binding="#{login}" class="form-control #{login.valid ? '' : 'form-control-danger'}" type="text" id="login" name="login" ph:placeholder="Login"
+                        value="#{userLoginBean.login}" required="true" />
+                    <div class="form-control-feedback">
+                        <h:message for="login" showSummary="true" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row #{password.valid ? '' : 'has-danger'}">
+                <label for="password" class="col-2 col-form-label">Password</label>
+                <div class="col-10">
+                    <h:inputSecret binding="#{password}" class="form-control #{password.valid ? '' : 'form-control-danger'}" type="text" id="password" name="password"
+                        ph:placeholder="Password" value="#{userLoginBean.password}" required="true" />
+                    <div class="form-control-feedback">
+                        <h:message for="password" showSummary="true" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="text-right">
+                        <h:commandButton type="submit" class="btn btn-warning" value="Cancel" />
+                        <h:commandButton type="submit" class="btn btn-success ml-2" value="Connexion"
+                            actionListener="#{userController.login(userLoginBean)}" />
+                        <a href="register.jsf" class="btn btn-primary">Register</a>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

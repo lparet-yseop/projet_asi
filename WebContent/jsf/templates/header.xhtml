@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<nav class="navbar navbar-toggleable-md navbar-inverse bg-info">
+		<div class="container">
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<h:link class="navbar-brand" value="Emergency" outcome="activities" />
+			<div class="collapse navbar-collapse" id="navbarText">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><h:link class="nav-link" value="Recipes" outcome="findRecipes" /></li>
+					<li class="nav-item"><a class="nav-link" href="#">Shop</a></li>
+				</ul>
+				<c:if test="#{empty userBean.login}">
+					<h:form class="form-inline justify-content-md-center justify-content-end">
+						<h:inputText class="form-control col-4 mr-sm-1" id="login" name="login" value="#{userLoginBean.login}" type="text" ph:placeholder="Login" required="true" />
+						<h:inputSecret class="form-control col-4 mr-sm-1" id="password" name="password" value="#{userLoginBean.password}" type="text" ph:placeholder="Password" required="true" />
+						<h:commandButton type="submit" class="btn btn-outline-secondary col-2 my-2 my-sm-0" style="border-color: white; color: white;" value="Login"
+							action="#{userController.login(userLoginBean)}" />
+					</h:form>
+				</c:if>
+				<c:if test="#{not empty userBean.login}">
+					<span class="navbar-text mr-4">User connected : <h:outputText value="#{userCounterController.getUsersConnected()} " />
+					</span>
+					<h:link class="btn btn-outline-secondary mr-sm-1" style="border-color: white; color: white;" value="Administration" outcome="administration" />
+					<h:form>
+						<h:commandButton type="submit" class="btn btn-outline-secondary mr-sm-1" style="border-color: white; color: white; height: 100%;" value="Logout"
+							action="#{userController.logout}" />
+					</h:form>
+				</c:if>
+			</div>
+		</div>
+	</nav>
+</ui:composition>

@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+	template="templates/main-template.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="header-title">Emergency</ui:define>
+	<ui:define name="main-content">
+		<h1>Manage Users</h1>
+		<div class="row">
+			<div class="col-sm-6">
+	            <div class="card">
+	                <div class="card-block">
+	                	<table class="table table-striped">
+							<thead class="thead-inverse">
+								<tr>
+									<th>Login</th>
+									<th>Password</th>
+									<th>Admin</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<ui:repeat value="#{userController.getAllUsers()}" var="userAdministrationBean">
+									<tr>
+										<td>#{userAdministrationBean.login}</td>
+										<td>#{userAdministrationBean.password}</td>
+										<td>#{userAdministrationBean.admin}</td>
+										<td>
+											<h:form>
+												<p:growl id="growl" life="2000" />
+												<h:commandButton type="submit" class="btn btn-danger ml-2" value="Delete" action="#{userController.deleteUser(userAdministrationBean)}" />
+												<h:commandButton type="submit" class="btn btn-primary ml-2" value="Modify" />
+											</h:form>
+										</td>
+									</tr>
+								</ui:repeat>
+							</tbody>
+						</table>
+						<a href="register.jsf" class="btn btn-warning">Register</a>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-sm-6">
+	            <div class="card">
+	                <div class="card-block">
+	                	<h:form id="form-register">
+	                		<h:inputHidden value="#{userAdministrationBean.id}"/>
+				        	<p:growl id="growl" life="2000" />
+				            <div class="form-group row #{firstnameBind.valid ? '' : 'has-danger'}">
+				                <label for="firstname" class="col-2 col-form-label">First name</label>
+				                <div class="col-10">
+				                    <h:inputText binding="#{firstnameBind}" id="firstname" value="#{userAdministrationBean.firstname}"
+				                        class="form-control #{firstnameBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The first name is required" />
+				                    <div class="form-control-feedback">
+				                        <h:message for="firstname" showSummary="true" showDetail="false" />
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="form-group row #{lastnameBind.valid ? '' : 'has-danger'}">
+				                <label for="lastname" class="col-2 col-form-label">Last name</label>
+				                <div class="col-10">
+				                    <h:inputText binding="#{lastnameBind}" id="lastname" value="#{userAdministrationBean.lastname}"
+				                        class="form-control #{lastnameBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The last name is required" />
+				                    <div class="form-control-feedback">
+				                        <h:message for="lastname" showSummary="true" showDetail="false" />
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="form-group row #{loginBind.valid ? '' : 'has-danger'}">
+				                <label for="login" class="col-2 col-form-label">Login</label>
+				                <div class="col-10">
+				                    <h:inputText binding="#{loginBind}" id="login" value="#{userAdministrationBean.login}"
+				                        class="form-control #{loginBind.valid ? '' : 'form-control-danger'}" required="true" requiredMessage="The login is required" />
+				                    <div class="form-control-feedback">
+				                        <h:message for="login" showSummary="true" showDetail="false" />
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="form-group row #{passwordBind.valid ? '' : 'has-danger'}">
+				                <label for="password" class="col-2 col-form-label">Password</label>
+				                <div class="col-10">
+				                    <h:inputText binding="#{passwordBind}" id="password" value="#{userAdministrationBean.password}"
+				                        class="form-control #{passwordBind.valid ? '' : 'form-control-danger'}">
+				                    </h:inputText>
+				                    <div class="form-control-feedback">
+				                        <h:message for="password" showSummary="true" showDetail="false" />
+				                    </div>
+				                </div>
+				            </div>
+				            <div class="form-group row">
+				                <div class="col-sm-12">
+				                    <div class="text-right" style="font-size:0">
+				                        <h:commandButton type="submit" class="btn btn-success ml-2" value="Modify" action="#{userController.setUser(userAdministrationBean)}" />
+				                    </div>
+				                </div>
+				            </div>
+				        </h:form>
+	                </div>
+	            </div>
+	        </div>
+		</div>
+	</ui:define>
+</ui:composition>
